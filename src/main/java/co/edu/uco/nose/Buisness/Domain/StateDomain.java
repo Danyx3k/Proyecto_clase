@@ -32,4 +32,3 @@ public final class StateDomain extends Domain {
     }
 }
 
-}

@@ -8,7 +8,7 @@ import java.util.UUID;
 public final class CityDomain extends Domain {
         private String name;
 
-        public CityyDomain() {
+        public CityDomain() {
             super(UUIDHelper.getUUIDHelper().getDefault());
             setName(TextHelper.getDefault());
         }
