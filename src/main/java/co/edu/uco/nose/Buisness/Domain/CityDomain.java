@@ -5,8 +5,7 @@ import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 
 import java.util.UUID;
 
-public class CityDomain {
-    public final class CityDomain extends Domain {
+public final class CityDomain extends Domain {
         private String name;
 
         public CityyDomain() {
