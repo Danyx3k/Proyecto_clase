@@ -1,4 +1,54 @@
 package co.edu.uco.nose.dto;
 
-public class StateDTO {
+import co.edu.uco.nose.crosscuting.helper.TextHelper;
+import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
+
+import java.util.UUID;
+
+public final class StateDTO {
+    private UUID id;
+    private String name;
+    private CountryDTO country;
+
+    public StateDTO(){
+        setId(UUIDHelper.getUUIDHelper().getDefault());
+        setName(TextHelper.getDefault());
+        setCountry( new CountryDTO());
+    }
+
+    public StateDTO(final UUID id){
+        setId(UUIDHelper.getUUIDHelper().getDefault());
+        setName(TextHelper.getDefault());
+        setCountry( new CountryDTO());
+    }
+
+    public StateDTO(final UUID id, final String name, final CountryDTO country){
+        setId(id);
+        setName(name);
+        setCountry(country);
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = UUIDHelper.getUUIDHelper().getDefault(id);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = TextHelper.getDefaultwithTrim(name);
+    }
+
+    public CountryDTO getCountry() {
+        return country;
+    }
+
+    public void setCountry(CountryDTO country) {
+        this.country = (country == null) ? new CountryDTO() : country;
+    }
 }
