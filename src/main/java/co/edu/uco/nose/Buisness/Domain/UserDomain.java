@@ -33,7 +33,7 @@ public final class UserDomain extends Domain{
         setMobileNumber(TextHelper.getDefault());
         seteMailConfirmed(false);
         seteMailConfirmedDefaultValue(true);
-        setMobileNumber(false);
+        setMobileNumberConfirmed(false);
         seteMailConfirmedDefaultValue(true);
     }
 
@@ -50,8 +50,8 @@ public final class UserDomain extends Domain{
         setMobileNumber(TextHelper.getDefault());
         seteMailConfirmed(false);
         seteMailConfirmedDefaultValue(true);
-        setMobileNumber(false);
-        seteMailConfirmedDefaultValue(true);
+        setMobileNumberConfirmed(false);
+        setMobileNumberConfirmedDefaultValue(true);
     }
 
     public UserDomain(final UUID id,
@@ -77,6 +77,7 @@ public final class UserDomain extends Domain{
         setSecondSurname(secondSurname);
         setCity(city);
         seteMail(eMail);
+        setMobileNumber(mobileNumber);
         seteMailConfirmed(eMailConfirmed);
         seteMailConfirmedDefaultValue(eMailConfirmedDefaultValue);
         setMobileNumberConfirmed(mobileNumberConfirmed);
@@ -163,7 +164,7 @@ public final class UserDomain extends Domain{
         this.eMail = TextHelper.getDefaultwithTrim(eMail);
     }
 
-    public String getMobileNumbre() {
+    public String getMobileNumber() {
         return mobileNumber;
     }
 
