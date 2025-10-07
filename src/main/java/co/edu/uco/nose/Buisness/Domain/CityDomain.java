@@ -7,20 +7,24 @@ import java.util.UUID;
 
 public final class CityDomain extends Domain {
     private String name;
+    private StateDomain state;
 
     public CityDomain() {
         super(UUIDHelper.getUUIDHelper().getDefault());
         setName(TextHelper.getDefault());
+        setState(new StateDomain());
     }
 
     public CityDomain(final UUID id) {
         super(id);
         setName(TextHelper.getDefault());
+        setState(new StateDomain());
     }
 
-    public CityDomain(final UUID id, final String name){
+    public CityDomain(final UUID id, final String name, final StateDomain state){
         super(id);
         setName(name);
+        setState(state);
     }
 
     public String getName() {
@@ -31,4 +35,11 @@ public final class CityDomain extends Domain {
         this.name = TextHelper.getDefaultwithTrim(name);
     }
 
+    public StateDomain getState() {
+        return state;
+    }
+
+    public void setState(final StateDomain state) {
+        this.state = (state == null) ? new StateDomain() : state;
+    }
 }

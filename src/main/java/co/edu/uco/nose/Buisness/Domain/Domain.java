@@ -10,6 +10,9 @@ class Domain {
         setId(id);
     }
 
+    Domain() {
+    }
+
     public UUID getId() {
         return id;
     }
