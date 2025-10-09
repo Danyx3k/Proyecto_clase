@@ -5,7 +5,7 @@ import co.edu.uco.nose.data.dao.DeleteDAO;
 import co.edu.uco.nose.data.dao.RetriveDAO;
 import co.edu.uco.nose.data.dao.UpdateDAO;
 import co.edu.uco.nose.entity.CountryEntity;
-import co.edu.uco.nose.entity.UserEntity;
+
 
 import java.util.UUID;
 

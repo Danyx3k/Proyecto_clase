@@ -7,6 +7,11 @@ import java.sql.Connection;
 public abstract class DAOFactory {
 
     protected Connection connection;
+    protected FactoryEnum factory = FactoryEnum.SQLSERVER;
+
+    public static DAOFactory getFactory(){
+        return null;
+    }
 
     public abstract CityDAO getCityDAO();
 
