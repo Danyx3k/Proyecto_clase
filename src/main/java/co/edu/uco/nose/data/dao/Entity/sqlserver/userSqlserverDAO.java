@@ -43,5 +43,4 @@ public final class userSqlserverDAO extends SqlConnection implements UserDAO {
     public void delete(UUID uuid) {
 
     }
-
 }
