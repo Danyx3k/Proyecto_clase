@@ -10,10 +10,10 @@ public enum MessagesEnum {
     TECHNICAL_ERROR_SQL_CONNECTION_IS_CLOSED ("Conexión contra la fuente de información deseada cerrada","Problema inesperado, validando el estado de la conexión contra la fuente de datos deseada"),
     USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_CONNECTION_STATUS("Problema inesperado, validando el estado de la conexión contra la fuente de datos deseada","Se ha presentado un problema inesperado tratando de validar la operación contra la fuente de información deseada.Intente de nuevo y si el problema persisite contacte al administrador de la aplicación"),
     TECHNICAL_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_CONNECTION_STATUS ("Error inesperado, validando si la conexión contra la base de datos está abierta","Se presentó un error de tipo SQLException validar si la conexión contra la base de datos estaba o no abierta. POr favor valide la consola de errores para validar con detalle el problema presentado"),
-    USER_ERROR_SQL_TRANSACTION_NOT_STARTED("No se ha iniciado la transacción para llevar a cabo esta operación."),
-    TECHNICAL_ERROR_SQL_TRANSACTION_NOT_STARTED("Transaction no activa (autoCommit=true)."),
-    USER_ERROR_SQL_TRANSACTION_STATUS_UNKNOWN ("Ha ocurrido un error al verificar el estado de la transacción. Intenta de nuevo o contacta al administrador."),
-    TECHNICAL_ERROR_SQL_TRANSACTION_STATUS_UNKNOWN ("Error inesperado al comprobar el estado de la transacción (getAutoCommit/estado de la conexión). Revise el estado de la conexión y los logs del controlador.");
+    USER_ERROR_SQL_TRANSACTION_NOT_STARTED("Problema inesperado, validando el estado de la conexión contra la fuente de datos deseada","No se ha iniciado la transacción para llevar a cabo esta operación."),
+    TECHNICAL_ERROR_SQL_TRANSACTION_NOT_STARTED("Transacción no realizada con exitos","Transaction no activa (autoCommit=true)."),
+    USER_ERROR_SQL_TRANSACTION_STATUS_UNKNOWN ("Error desconocido","Ha ocurrido un error al verificar el estado de la transacción. Intenta de nuevo o contacta al administrador."),
+    TECHNICAL_ERROR_SQL_TRANSACTION_STATUS_UNKNOWN ("Error desconocido al comprobar el estado","Error inesperado al comprobar el estado de la transacción (getAutoCommit/estado de la conexión). Revise el estado de la conexión y los logs del controlador.");
 
 
     private String title;

@@ -41,6 +41,13 @@
 			<scope>test</scope>
 		</dependency>
 
+        <!-- Driver JDBC de Microsoft SQL Server -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>12.6.1.jre11</version> <!-- Cambia a .jre8 o .jre17 según tu JDK -->
+        </dependency>
+
 
     </dependencies>
 
@@ -50,7 +57,16 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-		</plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>24</source>
+                    <target>24</target>
+                    <compilerArgs>--enable-preview</compilerArgs>
+                </configuration>
+            </plugin>
+        </plugins>
 	</build>
 
 

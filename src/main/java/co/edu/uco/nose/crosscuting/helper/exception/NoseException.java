@@ -3,9 +3,12 @@ package co.edu.uco.nose.crosscuting.helper.exception;
 import co.edu.uco.nose.crosscuting.helper.ObjectHelper;
 import co.edu.uco.nose.crosscuting.helper.TextHelper;
 
+import java.io.Serial;
+
 public final class NoseException extends RuntimeException{
 
-    private static final long serialVersionUID = -433023700129543247L;
+    @Serial
+    private static final long serialVersionUID = -5426975419791889184L;
     private Throwable rootException;
     private String userMessage;
     private String technicalMessage;
