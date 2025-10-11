@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
+import static co.edu.uco.nose.crosscuting.helper.UUIDHelper.getUUIDHelper;
+
 public final class userSqlserverDAO extends SqlConnection implements UserDAO {
 
     userSqlserverDAO(Connection connection) {
@@ -99,10 +101,11 @@ public final class userSqlserverDAO extends SqlConnection implements UserDAO {
             try (var resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     // Tipo de Identificacion
+                    var idType =new IdTypeEntity();
 
                     var country = new CountryEntity();
                     country.setId(
-                            UUIDHelper.getUUIDHelper().getFromString(
+                            getUUIDHelper().getFromString(
                                     resultSet.getString("CountryId")
                             )
                     );
@@ -111,22 +114,21 @@ public final class userSqlserverDAO extends SqlConnection implements UserDAO {
                     var state = new StateEntity();
                     state.setCountry(country);
                     state.setId(
-                            UUIDHelper.getUUIDHelper().getFromString(
+                            getUUIDHelper().getFromString(
                                     resultSet.getString("StateId")
                             )
                     );
                     state.setName(resultSet.getString("StateName"));
 
                     var city = new CityEntity();
-                    city.setState(state);
                     city.setId(
-                            UUIDHelper.getUUIDHelper().getFromString(
+                            getUUIDHelper().getFromString(
                                     resultSet.getString("CityId")
                             )
                     );
                     city.setName(resultSet.getString("CityName"));
 
-                    user.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("id")));
+                    user.setId(getUUIDHelper().getFromString(resultSet.getString("id")));
                     user.setIdType(idType);
                     user.setFirstName(resultSet.getString("firstName"));
                     user.setSecondName(resultSet.getString("secondNAme"));
@@ -135,9 +137,8 @@ public final class userSqlserverDAO extends SqlConnection implements UserDAO {
                     user.setCity(city);
                     user.seteMail(resultSet.getString("eMail"));
                     user.setMobileNumber(resultSet.getString("mobileNumber"));
-                    user.seteMailConfirmed()(resultSet.getBoolean("eMailConfirm"));
+                    user.seteMailConfirmed(resultSet.getBoolean("eMailConfirm"));
                     user.setMobileNumberConfirmed(resultSet.getBoolean("mobileNumberConfirm"));
-
                 }
 
             }
