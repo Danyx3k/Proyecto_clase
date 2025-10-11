@@ -57,6 +57,36 @@ public final class userSqlserverDAO extends SqlConnection implements UserDAO {
 
     @Override
     public UserEntity findById(UUID uuid) {
+
+        final var sql = new StringBuilder();
+        sql.append("SELECT ");
+        sql.append("  u.id, ");
+        sql.append("  it.id   AS idTypeId, ");
+        sql.append("  it.name AS idTypeName, ");
+        sql.append("  u.idNumber, ");
+        sql.append("  u.firstName, ");
+        sql.append("  u.secondName, ");
+        sql.append("  u.firstSurname, ");
+        sql.append("  u.secondSurname, ");
+        sql.append("  c.id    AS cityId, ");
+        sql.append("  c.name  AS cityName, ");
+        sql.append("  s.id    AS stateId, ");
+        sql.append("  s.name  AS stateName, ");
+        sql.append("  p.id    AS contryId, ");
+        sql.append("  p.name  AS contryName, ");
+        sql.append("  u.eMail, ");
+        sql.append("  u.mobileNumber, ");
+        sql.append("  u.eMailConfirmed, ");
+        sql.append("  u.mobileNumberConfirmed ");
+        sql.append("FROM dbo.[user] AS u ");
+        sql.append("INNER JOIN dbo.IdType AS it ");
+        sql.append("  ON u.idType = it.id ");
+        sql.append("INNER JOIN dbo.City AS c ");
+        sql.append("  ON u.city = c.id ");
+        sql.append("INNER JOIN dbo.State AS s ");
+        sql.append("  ON c.state = s.id ");
+        sql.append("INNER JOIN dbo.Contry AS p ");
+        sql.append("  ON s.contry = p.id;");
         return null;
     }
 
@@ -71,8 +101,8 @@ public final class userSqlserverDAO extends SqlConnection implements UserDAO {
 
 
         } catch (final Exception exception) {
-            var userMessage = "Se ha presentado un problema tratando de registrar la información en la base de datos";
-            var technicalMessage = "Se ha presentado un problema inesperado al tratar de ejecutar el Script de insert, revise el log de errores";
+            var userMessage = "Se ha presentado un problema tratando de actualizar la información en la base de datos";
+            var technicalMessage = "Se ha presentado un problema inesperado al tratar de ejecutar el Script de actualización, revise el log de errores";
             throw NoseException.create(exception, userMessage, technicalMessage);
         }
     }
