@@ -1,6 +1,5 @@
 package co.edu.uco.nose.data.dao.Entity.sqlserver;
 
-import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 import co.edu.uco.nose.crosscuting.helper.exception.NoseException;
 import co.edu.uco.nose.data.dao.Entity.SqlConnection;
 import co.edu.uco.nose.data.dao.Entity.UserDAO;
