@@ -23,4 +23,8 @@ public final class UUIDHelper {
         }
         return UUID.fromString(uuidAsString);
     }
+
+    public UUID genetareNweUUID(){
+        return UUID.randomUUID();
+    }
 }

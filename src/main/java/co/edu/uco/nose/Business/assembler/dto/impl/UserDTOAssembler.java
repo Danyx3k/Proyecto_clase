@@ -11,6 +11,9 @@ import co.edu.uco.nose.crosscuting.helper.ObjectHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 import co.edu.uco.nose.dto.UserDTO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class UserDTOAssembler implements DTOassembler<UserDTO, UserDomain> {
 
     // ✅ Instancia única (Singleton)
@@ -70,5 +73,15 @@ public final class UserDTOAssembler implements DTOassembler<UserDTO, UserDomain>
                 dtoTmp.iseMailConfirmed(),
                 dtoTmp.isMobileNumberConfirmed()
         );
+    }
+
+    @Override
+    public List<UserDTO> toDTO(final List<UserDomain> domainList) {
+        var userDTOList = new ArrayList<UserDTO>();
+
+        for (var UserDomain : domainList){
+            userDTOList.add((toDTO(UserDomain)));
+        }
+        return userDTOList;
     }
 }

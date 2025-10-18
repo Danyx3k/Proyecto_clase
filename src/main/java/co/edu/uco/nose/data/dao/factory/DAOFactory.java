@@ -36,7 +36,7 @@ public abstract class DAOFactory {
 
     protected abstract void openConection();
 
-    protected void initTransaction(){
+    public void initTransaction(){
 
         try {
             connection.setAutoCommit(false);
@@ -47,7 +47,7 @@ public abstract class DAOFactory {
         }
     };
 
-    protected void commitTransaction(){
+    public void commitTransaction(){
         try {
             connection.setAutoCommit(false);
         }catch (final SQLException exception){
@@ -59,7 +59,7 @@ public abstract class DAOFactory {
 
     };
 
-    protected void rollbackTransaction(){
+    public void rollbackTransaction(){
         try {
             connection.rollback();
         }catch (final SQLException exception){
@@ -70,7 +70,7 @@ public abstract class DAOFactory {
 
     };
 
-    protected void closeConection(){
+    public void closeConection(){
         try {
             connection.close();
         }catch (final SQLException exception){
