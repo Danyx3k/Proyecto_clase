@@ -18,4 +18,13 @@ public interface UserBusiness {
     List<UserDomain> findAllUsersByDilters(UserDomain userFilters);
 
     UserDomain findSpecificUser(UUID id);
+
+    void confirmMobileNumber(UUID id, int confirmationCode);
+
+    void confirmEmail(UUID id, int confirmationCode);
+
+    void sendMobileNumberConfirmation(UUID id);
+
+    void sendEmailConfirmation(UUID id);
+
 }
