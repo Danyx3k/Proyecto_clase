@@ -1,5 +1,6 @@
 package co.edu.uco.nose.data.dao.Entity.sqlserver;
 
+import co.edu.uco.nose.crosscuting.helper.SqlConnectionHelper;
 import co.edu.uco.nose.crosscuting.helper.exception.NoseException;
 import co.edu.uco.nose.data.dao.Entity.SqlConnection;
 import co.edu.uco.nose.data.dao.Entity.UserDAO;
@@ -20,6 +21,7 @@ public final class userSqlserverDAO extends SqlConnection implements UserDAO {
 
     @Override
     public void create(final UserEntity entity) {
+
         final var sql = new StringBuilder();
         sql.append("INSERT INTO USER id, idType, idNumber, firstName, secondName,firstSurname, secondSurname, city, eMail, mobileNumber, eMailConfirmed, mobileNumberConfirmed");
         sql.append("SELECT ?,?,?,?,?,?,?,?,?,?,?,?");

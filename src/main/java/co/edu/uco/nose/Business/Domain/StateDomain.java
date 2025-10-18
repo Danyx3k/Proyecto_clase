@@ -1,4 +1,4 @@
-package co.edu.uco.nose.Buisness.Domain;
+package co.edu.uco.nose.Business.Domain;
 
 import co.edu.uco.nose.crosscuting.helper.TextHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
