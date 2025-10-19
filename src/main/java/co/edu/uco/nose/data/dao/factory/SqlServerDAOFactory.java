@@ -19,7 +19,7 @@ public final class SqlServerDAOFactory extends DAOFactory{
             // Datos de conexión
             String url = "jdbc:postgresql://localhost:3333/proyecto_clase";
             String user = "postgres";
-            String password = "Vanadi64";
+            String password = "vanadi64";
 
             // Conexión
             this.connection = DriverManager.getConnection(url, user, password);

@@ -1,9 +1,12 @@
 package co.edu.uco.nose.data.dao.Entity.sqlserver;
 
+import co.edu.uco.nose.crosscuting.helper.MessageCatalog.MessagesEnum;
+import co.edu.uco.nose.crosscuting.helper.SqlConnectionHelper;
 import co.edu.uco.nose.crosscuting.helper.exception.NoseException;
 import co.edu.uco.nose.data.dao.Entity.SqlConnection;
 import co.edu.uco.nose.data.dao.Entity.UserDAO;
 import co.edu.uco.nose.entity.*;
+
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -22,7 +25,9 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
     public void create(final UserEntity entity) {
 
         final var sql = new StringBuilder();
-        sql.append("INSERT INTO USER id, idType, idNumber, firstName, secondName,firstSurname, secondSurname, city, eMail, mobileNumber, eMailConfirmed, mobileNumberConfirmed");
+        sql.append("INSERT INTO User(id, tipoIdentificacion, numeroIdentificacion, primerNombre, segundoNombre," +
+                "primerApellido, segundoApellido, ciudadResidencia, correoElectronico, numeroTelefonoMovil," +
+                "correoElectronicoConfirmado, numeroTelefonoMovilConfirmado)");
         sql.append("SELECT ?,?,?,?,?,?,?,?,?,?,?,?");
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())){
 
@@ -42,12 +47,12 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
             preparedStatement.executeUpdate();
 
         } catch (final SQLException exception) {
-            var userMessage = "Se ha presentado un problema tratando de inertar un usuario por favor intente de nuevo. Si el problema persiste por favor contacte al administrador del sistema...";
-            var technicalMessage = "Se ha presentado un problema inesperado al tratar de ejecutar " + exception.getMessage();
+            var userMessage = MessagesEnum.USER_ERROR_SQL_CREATE.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CREATE.getContent();
             throw NoseException.create(exception, userMessage, technicalMessage);
         }catch(final Exception exception) {
-            var userMessage = "Se ha presentado un problema inesperado tratando de insertar un usuario por favor intente de nuevo. Si el problema persiste por favor contacte al administrador del sistema...";
-            var technicalMessage = "Se ha presentado un problema inesperado al tratar de ejecutar " + exception.getMessage();
+            var userMessage = MessagesEnum.USER_ERROR_UNEXPECTED_CREATE.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_UNEXPECTED_CREATE.getContent();
             throw NoseException.create(exception, userMessage, technicalMessage);
         }
     }
@@ -64,40 +69,46 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
 
     @Override
     public UserEntity findById(final UUID id) {
+
+        SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
         var user = new UserEntity();
+
         final var sql = new StringBuilder();
-        sql.append("SELECT ");
-        sql.append("  u.id, ");
-        sql.append("  it.id   AS idTypeId, ");
-        sql.append("  it.name AS idTypeName, ");
-        sql.append("  u.idNumber, ");
-        sql.append("  u.firstName, ");
-        sql.append("  u.secondName, ");
-        sql.append("  u.firstSurname, ");
-        sql.append("  u.secondSurname, ");
-        sql.append("  c.id    AS cityId, ");
-        sql.append("  c.name  AS cityName, ");
-        sql.append("  s.id    AS stateId, ");
-        sql.append("  s.name  AS stateName, ");
-        sql.append("  p.id    AS contryId, ");
-        sql.append("  p.name  AS contryName, ");
-        sql.append("  u.eMail, ");
-        sql.append("  u.mobileNumber, ");
-        sql.append("  u.eMailConfirmed, ");
-        sql.append("  u.mobileNumberConfirmed ");
-        sql.append("FROM user AS u ");
-        sql.append("INNER JOIN IdType AS it ");
-        sql.append("  ON u.idType = it.id ");
-        sql.append("INNER JOIN City AS c ");
-        sql.append("  ON u.city = c.id ");
-        sql.append("INNER JOIN State AS s ");
-        sql.append("  ON c.state = s.id ");
-        sql.append("INNER JOIN Contry AS p ");
-        sql.append("  ON s.contry = p.id;");
-        sql.append("WHERE u.id = ?");
+        sql.append("SELECT      u.id,");
+        sql.append("            ti.id AS idTipoIdentificacion,");
+        sql.append("            ti.nombre AS nombreTipoIdentificacion,");
+        sql.append("            u.numeroIdentificacion,");
+        sql.append("            u.primerNombre,");
+        sql.append("            u.segundoNombre,");
+        sql.append("            u.primerApellido,");
+        sql.append("            u.segundoApellido,");
+        sql.append("            c.id AS idCiudadResidencia,");
+        sql.append("            c.nombre AS nombreCiudadResidencia,");
+        sql.append("            d.id AS idDepartamentoCiudadResidencia,");
+        sql.append("            d.nombre AS nombreDepartamentoCiudadResidencia,");
+        sql.append("            p.id AS idPaisDepartamentoCiudadResidencia,");
+        sql.append("            p.nombre AS nombrePaisDepartamentoCiudadResidencia,");
+        sql.append("            u.correoElectronico,");
+        sql.append("            u.numeroTelefonoMovil,");
+        sql.append("            u.correoElectronicoConfirmado,");
+        sql.append("            u.numeroTelefonoMovilConfirmado ");
+        sql.append("FROM        Usuario AS u ");
+        sql.append("INNER JOIN  TipoIdentificacion AS ti ");
+        sql.append("ON          u.tipoIdentificacion = ti.id ");
+        sql.append("INNER JOIN  Ciudad AS c ");
+        sql.append("ON          u.ciudadResidencia = c.id ");
+        sql.append("INNER JOIN  Departamento AS d ");
+        sql.append("ON          c.departamento = d.id ");
+        sql.append("INNER JOIN  Pais AS p ");
+        sql.append("ON          d.pais = p.id ");
+        sql.append("WHERE       u.ud = ?");
+
 
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
+
             preparedStatement.setObject(1, id);
+            preparedStatement.executeUpdate();
+
             try (var resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     // Tipo de Identificacion
@@ -143,21 +154,12 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
 
             }
         } catch (final SQLException exception) {
-            var userMessage =
-                    "Se ha presentado un problema tratando de consultar la información del usuario deseado. " +
-                            "Por favor inténtelo de nuevo más tarde.";
-            var technicalMessage =
-                    "Se ha presentado un problema al tratar de ejecutar el proceso de consulta del usuario deseado. " +
-                            exception.getMessage();
+            var userMessage = MessagesEnum.USER_ERROR_FIND_BY_ID_SQL.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_FIND_BY_ID_SQL.getContent();
             throw NoseException.create(exception, userMessage, technicalMessage);
-
         } catch (final Exception exception) {
-            var userMessage =
-                    "Se ha presentado un problema INESPERADO tratando de consultar la información del usuario deseado. " +
-                            "Por favor inténtelo de nuevo más tarde.";
-            var technicalMessage =
-                    "Se ha presentado un problema inesperado al tratar de ejecutar el proceso de consulta del usuario deseado. " +
-                            exception.getMessage();
+            var userMessage = MessagesEnum.USER_ERROR_FIND_BY_ID_UNEXPECTED.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_FIND_BY_ID_UNEXPECTED.getContent();
             throw NoseException.create(exception, userMessage, technicalMessage);
         }
 
@@ -166,23 +168,59 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
 
     @Override
     public void update(final UserEntity entity) {
+
+        SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
+
         final var sql = new StringBuilder();
-        sql.append("UPDATE USER SET idType = ?, idNumber = ?, firstName= ?, secondName= ?,firstSurname = ?, secondSurname = ?, city= ?, eMail= ?, mobileNumber= ?, eMailConfirmed= ?, mobileNumberConfirmed= ?");
-        sql.append("WHERE id =?");
+        sql.append("UPDATE  User ");
+        sql.append("SET     tipoIdentificacion = ?,");
+        sql.append("        numeroIdentificacion = ?,");
+        sql.append("        primerNombre = ?,");
+        sql.append("        segundoNombre = ?,");
+        sql.append("        primerApellido = ?,");
+        sql.append("        segundoApellido = ?,");
+        sql.append("        ciudadResidencia = ?,");
+        sql.append("        correoElectronico = ?,");
+        sql.append("        numeroTelefonoMovil = ?,");
+        sql.append("        correoElectronicoConfirmado = ?,");
+        sql.append("        numeroTelefonoMovilConfirmado = ?");
+        sql.append("WHERE   id = ?");
+
 
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
+
+            preparedStatement.setObject(1, entity.getIdType().getId());
+            preparedStatement.setString(2, entity.getIdNumber());
+            preparedStatement.setString(3, entity.getFirstName());
+            preparedStatement.setString(4, entity.getSecondName());
+            preparedStatement.setString(5, entity.getFirstSurname());
+            preparedStatement.setString(6, entity.getSecondSurname());
+            preparedStatement.setObject(7, entity.getCity().getId());
+            preparedStatement.setString(8, entity.geteMail());
+            preparedStatement.setString(9, entity.getMobileNumber());
+            preparedStatement.setBoolean(10, entity.iseMailConfirmed());
+            preparedStatement.setBoolean(11, entity.isMobileNumberConfirmed());
+            preparedStatement.setObject(12, entity.getId());
+
             preparedStatement.executeUpdate();
 
 
-        } catch (final Exception exception) {
-            var userMessage = "Se ha presentado un problema tratando de actualizar la información en la base de datos";
-            var technicalMessage = "Se ha presentado un problema inesperado al tratar de ejecutar el Script de actualización, revise el log de errores";
+        } catch (final SQLException exception) {
+            var userMessage = MessagesEnum.USER_ERROR_SQL_UPDATE.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UPDATE.getContent();
             throw NoseException.create(exception, userMessage, technicalMessage);
+        } catch (final Exception exception){
+            var userMessage = MessagesEnum.USER_ERROR_UNEXPECTED_UPDATE.getContent();
+            var technicalMessage = MessagesEnum.USER_ERROR_UNEXPECTED_UPDATE.getContent();
+            throw NoseException.create(exception,userMessage,technicalMessage);
         }
     }
 
     @Override
     public void delete(final UUID id) {
+
+        SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
+
         final var sql= new StringBuilder();
         sql.append("DELETE FROM User ");
         sql.append("WHERE id=?");
@@ -192,12 +230,12 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
             preparedStatement.executeUpdate();
 
         } catch (final SQLException exception) {
-            var userMessage = "Se ha presentado un problema tratando de eliminar un usuario por favor intente de nuevo. Si el problema persiste por favor contacte al administrador del sistema...";
-            var technicalMessage = "Se ha presentado un problema inesperado al tratar de ejecutar " + exception.getMessage();
+            var userMessage = MessagesEnum.USER_ERROR_SQL_DELETE.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_DELETE.getContent();
             throw NoseException.create(exception, userMessage, technicalMessage);
-        }catch(final Exception exception) {
-            var userMessage = "Se ha presentado un problema inesperado tratando de eliminar un usuario por favor intente de nuevo. Si el problema persiste por favor contacte al administrador del sistema...";
-            var technicalMessage = "Se ha presentado un problema inesperado al tratar de ejecutar " + exception.getMessage();
+        } catch (final Exception exception) {
+            var userMessage = MessagesEnum.USER_ERROR_UNEXPECTED_DELETE.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_UNEXPECTED_DELETE.getContent();
             throw NoseException.create(exception, userMessage, technicalMessage);
         }
     }
