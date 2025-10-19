@@ -8,9 +8,9 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
 
-public final class idTypeSqlserverDAO extends SqlConnection implements IdTypeDAO {
+public final class IdTypeSqlserverDAO extends SqlConnection implements IdTypeDAO {
 
-    idTypeSqlserverDAO(Connection connection) {
+    public IdTypeSqlserverDAO(final Connection connection) {
         super(connection);
     }
 

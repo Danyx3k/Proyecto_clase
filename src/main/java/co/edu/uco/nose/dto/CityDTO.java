@@ -1,5 +1,6 @@
 package co.edu.uco.nose.dto;
 
+import co.edu.uco.nose.crosscuting.helper.ObjectHelper;
 import co.edu.uco.nose.crosscuting.helper.TextHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 
@@ -50,6 +51,6 @@ public final class CityDTO {
     }
 
     public void setState(final StateDTO state) {
-        this.state = (state == null) ? new StateDTO() : state;
+        this.state = ObjectHelper.getDefault(state, new StateDTO());
     }
 }

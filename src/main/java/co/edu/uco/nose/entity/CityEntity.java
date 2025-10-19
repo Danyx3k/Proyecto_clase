@@ -1,9 +1,11 @@
 package co.edu.uco.nose.entity;
 
+import co.edu.uco.nose.crosscuting.helper.ObjectHelper;
 import co.edu.uco.nose.crosscuting.helper.TextHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 import co.edu.uco.nose.dto.StateDTO;
 
+import javax.swing.plaf.nimbus.State;
 import java.util.UUID;
 
 public final class CityEntity {
@@ -50,6 +52,6 @@ public final class CityEntity {
     }
 
     public void setState(final StateDTO state) {
-        this.state = (state == null) ? new StateEntity() : state;
+        this.state = ObjectHelper.getDefault(state, new StateEntity());
     }
 }

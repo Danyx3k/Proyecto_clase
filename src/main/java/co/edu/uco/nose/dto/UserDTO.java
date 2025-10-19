@@ -1,5 +1,6 @@
 package co.edu.uco.nose.dto;
 
+import co.edu.uco.nose.crosscuting.helper.ObjectHelper;
 import co.edu.uco.nose.crosscuting.helper.TextHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 
@@ -98,7 +99,7 @@ public final class UserDTO {
     }
 
     public void setIdType(final IdTypeDTO idType) {
-        this.idType = (idType == null) ? new IdTypeDTO() : idType;
+        this.idType = ObjectHelper.getDefault(idType, new IdTypeDTO());
     }
 
     public String getIdNumber() {
@@ -146,7 +147,7 @@ public final class UserDTO {
     }
 
     public void setCity(final CityDTO city) {
-        this.city = (city == null) ? new CityDTO() : city;
+        this.city = ObjectHelper.getDefault(city, new CityDTO());
     }
 
     public String geteMail() {

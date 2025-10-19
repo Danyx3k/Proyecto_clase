@@ -1,5 +1,6 @@
 package co.edu.uco.nose.entity;
 
+import co.edu.uco.nose.crosscuting.helper.ObjectHelper;
 import co.edu.uco.nose.crosscuting.helper.TextHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 
@@ -49,6 +50,6 @@ public final class StateEntity {
     }
 
     public void setCountry(final CountryEntity country) {
-        this.country = (country == null) ? new CountryEntity() : country;
+        this.country = ObjectHelper.getDefault(country, new CountryEntity());
     }
 }

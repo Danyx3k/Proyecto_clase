@@ -1,5 +1,6 @@
 package co.edu.uco.nose.dto;
 
+import co.edu.uco.nose.crosscuting.helper.ObjectHelper;
 import co.edu.uco.nose.crosscuting.helper.TextHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 
@@ -49,6 +50,6 @@ public final class StateDTO {
     }
 
     public void setCountry(final CountryDTO country) {
-        this.country = (country == null) ? new CountryDTO() : country;
+        this.country = ObjectHelper.getDefault(country, new CountryDTO());
     }
 }

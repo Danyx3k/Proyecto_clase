@@ -8,9 +8,10 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
 
-public final class citySqlserverDAO extends SqlConnection implements CityDAO {
+public final class CitySqlserverDAO extends SqlConnection implements CityDAO {
 
-    public CitySqlServerDAO(final Connection connection){
+
+    public CitySqlserverDAO(final Connection connection) {
         super(connection);
     }
 

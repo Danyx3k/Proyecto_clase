@@ -1,6 +1,5 @@
 package co.edu.uco.nose.data.dao.Entity.sqlserver;
 
-import co.edu.uco.nose.crosscuting.helper.SqlConnectionHelper;
 import co.edu.uco.nose.crosscuting.helper.exception.NoseException;
 import co.edu.uco.nose.data.dao.Entity.SqlConnection;
 import co.edu.uco.nose.data.dao.Entity.UserDAO;
@@ -13,9 +12,9 @@ import java.util.UUID;
 
 import static co.edu.uco.nose.crosscuting.helper.UUIDHelper.getUUIDHelper;
 
-public final class userSqlserverDAO extends SqlConnection implements UserDAO {
+public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
 
-    userSqlserverDAO(Connection connection) {
+    public UserSqlserverDAO(final Connection connection) {
         super(connection);
     }
 

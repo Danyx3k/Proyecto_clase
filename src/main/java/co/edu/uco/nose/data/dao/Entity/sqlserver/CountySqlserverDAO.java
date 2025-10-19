@@ -8,9 +8,9 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
 
-public final class countySqlserverDAO extends SqlConnection implements CountryDAO {
+public final class CountySqlserverDAO extends SqlConnection implements CountryDAO {
 
-    countySqlserverDAO(Connection connection) {
+    public CountySqlserverDAO(final Connection connection) {
         super(connection);
     }
 

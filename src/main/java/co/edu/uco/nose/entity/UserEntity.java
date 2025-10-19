@@ -1,5 +1,6 @@
 package co.edu.uco.nose.entity;
 
+import co.edu.uco.nose.crosscuting.helper.ObjectHelper;
 import co.edu.uco.nose.crosscuting.helper.TextHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 
@@ -98,7 +99,7 @@ public final class UserEntity {
     }
 
     public void setIdType(final IdTypeEntity idType) {
-        this.idType = (idType == null) ? new IdTypeEntity() : idType;
+        this.idType = ObjectHelper.getDefault(idType, new IdTypeEntity());
     }
 
     public String getIdNumber() {
@@ -146,7 +147,7 @@ public final class UserEntity {
     }
 
     public void setCity(final CityEntity city) {
-        this.city = (city == null) ? new CityEntity() : city;
+        this.city = ObjectHelper.getDefault(city, new CityEntity());
     }
 
     public String geteMail() {

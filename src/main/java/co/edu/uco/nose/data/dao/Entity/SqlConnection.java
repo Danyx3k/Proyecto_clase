@@ -2,6 +2,7 @@ package co.edu.uco.nose.data.dao.Entity;
 
 import co.edu.uco.nose.crosscuting.helper.MessageCatalog.MessagesEnum;
 import co.edu.uco.nose.crosscuting.helper.ObjectHelper;
+import co.edu.uco.nose.crosscuting.helper.SqlConnectionHelper;
 import co.edu.uco.nose.crosscuting.helper.exception.NoseException;
 
 import java.sql.Connection;
@@ -21,6 +22,9 @@ protected Connection getConnection() {
 }
 
 private void setConnection(final Connection connection) {
+
+    SqlConnectionHelper.ensureConnectionIsOpen(connection);
+
     if (ObjectHelper.isNull(connection)){
         var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_IS_EMPTY.getContent();
         var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_IS_EMPTY.getContent();

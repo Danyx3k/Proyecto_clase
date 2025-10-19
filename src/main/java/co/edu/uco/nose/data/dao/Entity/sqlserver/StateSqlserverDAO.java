@@ -8,9 +8,9 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
 
-public final class stateSqlserverDAO extends SqlConnection implements StateDAO {
+public final class StateSqlserverDAO extends SqlConnection implements StateDAO {
 
-    stateSqlserverDAO(Connection connection) {
+    public StateSqlserverDAO(final Connection connection) {
         super(connection);
     }
 
