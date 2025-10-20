@@ -172,13 +172,14 @@ public final class UserEntity {
 
     public void seteMailConfirmed(final boolean eMailConfirmed) {
         this.eMailConfirmed = eMailConfirmed;
+        seteMailConfirmedDefaultValue(false);
     }
 
     public boolean iseMailConfirmedDefaultValue() {
         return eMailConfirmedDefaultValue;
     }
 
-    public void seteMailConfirmedDefaultValue(final boolean eMailConfirmedDefaultValue) {
+    private void seteMailConfirmedDefaultValue(final boolean eMailConfirmedDefaultValue) {
         this.eMailConfirmedDefaultValue = eMailConfirmedDefaultValue;
     }
 
@@ -188,13 +189,14 @@ public final class UserEntity {
 
     public void setMobileNumberConfirmed(final boolean mobileNumberConfirmed) {
         this.mobileNumberConfirmed = mobileNumberConfirmed;
+        setMobileNumberConfirmedDefaultValue(false);
     }
 
     public boolean isMobileNumberConfirmedDefaultValue() {
         return mobileNumberConfirmedDefaultValue;
     }
 
-    public void setMobileNumberConfirmedDefaultValue(final boolean mobileNumberConfirmedDefaultValue) {
+    private void setMobileNumberConfirmedDefaultValue(final boolean mobileNumberConfirmedDefaultValue) {
         this.mobileNumberConfirmedDefaultValue = mobileNumberConfirmedDefaultValue;
     }
 

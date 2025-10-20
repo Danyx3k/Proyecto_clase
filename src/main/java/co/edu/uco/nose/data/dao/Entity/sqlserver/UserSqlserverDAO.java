@@ -2,6 +2,7 @@ package co.edu.uco.nose.data.dao.Entity.sqlserver;
 
 import co.edu.uco.nose.crosscuting.helper.MessageCatalog.MessagesEnum;
 import co.edu.uco.nose.crosscuting.helper.SqlConnectionHelper;
+import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 import co.edu.uco.nose.crosscuting.helper.exception.NoseException;
 import co.edu.uco.nose.data.dao.Entity.SqlConnection;
 import co.edu.uco.nose.data.dao.Entity.UserDAO;
@@ -13,7 +14,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-import static co.edu.uco.nose.crosscuting.helper.UUIDHelper.getUUIDHelper;
 
 public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
 
@@ -31,7 +31,7 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
         sql.append("SELECT ?,?,?,?,?,?,?,?,?,?,?,?");
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())){
 
-            preparedStatement.setObject(1,entity.getId());
+            preparedStatement.setObject(1, entity.getId());
             preparedStatement.setObject(2, entity.getIdType().getId());
             preparedStatement.setString(3, entity.getIdNumber());
             preparedStatement.setString(4, entity.getFirstName());
@@ -107,49 +107,44 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
 
             preparedStatement.setObject(1, id);
-            preparedStatement.executeUpdate();
+
 
             try (var resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    // Tipo de Identificacion
-                    var idType =new IdTypeEntity();
+                    // Tipo de Identificación
+                    var idType = new IdTypeEntity();
+                    idType.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idTipoIdentificacion")));
+                    idType.setName(resultSet.getString("nombreTipoIdentificacion"));
 
+
+                    // Ciudad --> Departamento --> País
                     var country = new CountryEntity();
-                    country.setId(
-                            getUUIDHelper().getFromString(
-                                    resultSet.getString("CountryId")
-                            )
-                    );
-                    country.setName(resultSet.getString("countryName"));
+                    country.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idPaisDepartamentoCiudadResidencia")));
+                    country.setName(resultSet.getString("nombrePaisDepartamentoCiudadResidencia"));
 
                     var state = new StateEntity();
                     state.setCountry(country);
-                    state.setId(
-                            getUUIDHelper().getFromString(
-                                    resultSet.getString("StateId")
-                            )
-                    );
-                    state.setName(resultSet.getString("StateName"));
+                    state.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idDepartamentoCiudadResidencia")));
+                    state.setName(resultSet.getString("nombreDepartamentoCiudadResidencia"));
 
                     var city = new CityEntity();
-                    city.setId(
-                            getUUIDHelper().getFromString(
-                                    resultSet.getString("CityId")
-                            )
-                    );
-                    city.setName(resultSet.getString("CityName"));
+                    city.setState(state);
+                    city.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idCiudadResidencia")));
+                    city.setName(resultSet.getString("nombreCiudadResidencia"));
 
-                    user.setId(getUUIDHelper().getFromString(resultSet.getString("id")));
+
+                    user.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("id")));
                     user.setIdType(idType);
-                    user.setFirstName(resultSet.getString("firstName"));
-                    user.setSecondName(resultSet.getString("secondNAme"));
-                    user.setFirstSurname(resultSet.getString("firstSurname"));
-                    user.setSecondSurname(resultSet.getString("secondSurname"));
+                    user.setFirstName(resultSet.getString("primerNombre"));
+                    user.setSecondName(resultSet.getString("segundoNombre"));
+                    user.setFirstSurname(resultSet.getString("primerApellido"));
+                    user.setSecondSurname(resultSet.getString("segundoApellido"));
                     user.setCity(city);
-                    user.seteMail(resultSet.getString("eMail"));
-                    user.setMobileNumber(resultSet.getString("mobileNumber"));
-                    user.seteMailConfirmed(resultSet.getBoolean("eMailConfirm"));
-                    user.setMobileNumberConfirmed(resultSet.getBoolean("mobileNumberConfirm"));
+                    user.seteMail(resultSet.getString("correoElectronico"));
+                    user.setMobileNumber(resultSet.getString("numeroTelefonoMovil"));
+                    user.seteMailConfirmed(resultSet.getBoolean("correoElectronicoConfirmado"));
+                    user.setMobileNumberConfirmed(resultSet.getBoolean("numeroTelefonoMovilConfirmado"));
+
                 }
 
             }
