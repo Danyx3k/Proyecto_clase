@@ -3,20 +3,19 @@ package co.edu.uco.nose.entity;
 import co.edu.uco.nose.crosscuting.helper.ObjectHelper;
 import co.edu.uco.nose.crosscuting.helper.TextHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
-import co.edu.uco.nose.dto.StateDTO;
 
-import javax.swing.plaf.nimbus.State;
+
 import java.util.UUID;
 
 public final class CityEntity {
     private UUID id;
     private String name;
-    private StateDTO state;
+    private StateEntity state;
 
     public CityEntity (){
         setId(UUIDHelper.getUUIDHelper().getDefault());
         setName(TextHelper.getDefault());
-        setState(new StateDTO());
+        setState(new StateEntity());
     }
 
     public CityEntity(final UUID id){
@@ -25,7 +24,7 @@ public final class CityEntity {
         setState(new StateEntity());
     }
 
-    public CityDTO(final UUID id, final String name, final StateEntity state){
+    public CityEntity(final UUID id, final String name, final StateEntity state){
         setId(id);
         setName(name);
         setState(state);
@@ -47,11 +46,11 @@ public final class CityEntity {
         this.name = TextHelper.getDefault(name);
     }
 
-    public StateDTO getState() {
+    public StateEntity getState() {
         return state;
     }
 
-    public void setState(final StateDTO state) {
+    public void setState(final StateEntity state) {
         this.state = ObjectHelper.getDefault(state, new StateEntity());
     }
 }
