@@ -31,7 +31,7 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("INSERT INTO User(id, tipoIdentificacion, numeroIdentificacion, primerNombre, segundoNombre," +
+        sql.append("INSERT INTO proyecto_clase.usuario(id, tipoIdentificacion, numeroIdentificacion, primerNombre, segundoNombre," +
                 "primerApellido, segundoApellido, ciudadResidencia, correoElectronico, numeroTelefonoMovil," +
                 "correoElectronicoConfirmado, numeroTelefonoMovilConfirmado)");
         sql.append("SELECT ?,?,?,?,?,?,?,?,?,?,?,?");
@@ -78,7 +78,7 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("UPDATE  User ");
+        sql.append("UPDATE  proyecto_clase.usuario ");
         sql.append("SET     tipoIdentificacion = ?,");
         sql.append("        numeroIdentificacion = ?,");
         sql.append("        primerNombre = ?,");
@@ -127,7 +127,7 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
 
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
         final var sql= new StringBuilder();
-        sql.append("DELETE FROM User ");
+        sql.append("DELETE FROM proyecto_clase.usuario ");
         sql.append("WHERE id=?");
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
 
@@ -173,36 +173,34 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
 
 
     private String createSentenceFindByFilter(final UserEntity filterEntity, final List<Object> parametersList){
+
         final var sql = new StringBuilder();
 
-        sql.append("SELECT      u.id,");
-        sql.append("            ti.id AS idTipoIdentificacion,");
-        sql.append("            ti.nombre AS nombreTipoIdentificacion,");
-        sql.append("            u.numeroIdentificacion,");
-        sql.append("            u.primerNombre,");
-        sql.append("            u.segundoNombre,");
-        sql.append("            u.primerApellido,");
-        sql.append("            u.segundoApellido,");
-        sql.append("            c.id AS idCiudadResidencia,");
-        sql.append("            c.nombre AS nombreCiudadResidencia,");
-        sql.append("            d.id AS idDepartamentoCiudadResidencia,");
-        sql.append("            d.nombre AS nombreDepartamentoCiudadResidencia,");
-        sql.append("            p.id AS idPaisDepartamentoCiudadResidencia,");
-        sql.append("            p.nombre AS nombrePaisDepartamentoCiudadResidencia,");
-        sql.append("            u.correoElectronico,");
-        sql.append("            u.numeroTelefonoMovil,");
-        sql.append("            u.correoElectronicoConfirmado,");
-        sql.append("            u.numeroTelefonoMovilConfirmado ");
-        sql.append("FROM        Usuario AS u ");
-        sql.append("INNER JOIN  TipoIdentificacion AS ti ");
-        sql.append("ON          u.tipoIdentificacion = ti.id ");
-        sql.append("INNER JOIN  Ciudad AS c ");
-        sql.append("ON          u.ciudadResidencia = c.id ");
-        sql.append("INNER JOIN  Departamento AS d ");
-        sql.append("ON          c.departamento = d.id ");
-        sql.append("INNER JOIN  Pais AS p ");
-        sql.append("ON          d.pais = p.id ");
-        sql.append("WHERE       u.ud = ?");
+        sql.append("SELECT ");
+        sql.append("    u.id, ");
+        sql.append("    ti.id     AS idTipoIdentificacion, ");
+        sql.append("    ti.nombre AS nombretipoidentificacion, ");
+        sql.append("    u.numeroIdentificacion, ");
+        sql.append("    u.primerNombre, ");
+        sql.append("    u.segundoNombre, ");
+        sql.append("    u.primerApellido, ");
+        sql.append("    u.segundoApellido, ");
+        sql.append("    c.id      AS idCiudadResidencia, ");
+        sql.append("    c.nombre  AS nombreCiudadResidencia, ");
+        sql.append("    d.id      AS idDepartamentoCiudadResidencia, ");
+        sql.append("    d.nombre  AS nombreDepartamentoCiudadResidencia, ");
+        sql.append("    p.id      AS idPaisDepartamentoCiudadResidencia, ");
+        sql.append("    p.nombre  AS nombrePaisDepartamentoCiudadResidencia, ");
+        sql.append("    u.correoElectronico, ");
+        sql.append("    u.numeroTelefonoMovil, ");
+        sql.append("    u.correoElectronicoConfirmado, ");
+        sql.append("    u.numeroTelefonoMovilConfirmado ");
+        sql.append("FROM proyecto_clase.usuario AS u ");
+        sql.append("INNER JOIN proyecto_clase.tipoIdentificacion AS ti ON u.tipoIdentificacion = ti.id ");
+        sql.append("INNER JOIN proyecto_clase.ciudad AS c ON u.ciudadResidencia = c.id ");
+        sql.append("INNER JOIN proyecto_clase.departamento AS d ON c.departamento = d.id ");
+        sql.append("INNER JOIN proyecto_clase.pais AS p ON d.pais = p.id ");
+        sql.append("WHERE u.id = ?;");
 
         createWhereClauseFindByFilter(sql,parametersList, filterEntity);
 
@@ -242,7 +240,6 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
 
         addCondition(conditions, parametersList, !UUIDHelper.getUUIDHelper().isDefaultUUID(filterEntityValidated.getCity().getId()),
                 "u.ciudadResidencia = ?", filterEntityValidated.getCity().getId());
-
 
         addCondition(conditions, parametersList,
                 !TextHelper.isEmptyWithTrim(filterEntityValidated.geteMail()),
