@@ -67,6 +67,83 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
     public List<UserEntity> findAll() {
         return findByFilter(new UserEntity());
     }
+    @Override
+    public UserEntity findById(final UUID id) {
+        return findByFilter(new UserEntity(id)).stream().findFirst().orElse((new UserEntity()));
+    }
+
+    @Override
+    public void update(final UserEntity entity) {
+
+        SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
+
+        final var sql = new StringBuilder();
+        sql.append("UPDATE  User ");
+        sql.append("SET     tipoIdentificacion = ?,");
+        sql.append("        numeroIdentificacion = ?,");
+        sql.append("        primerNombre = ?,");
+        sql.append("        segundoNombre = ?,");
+        sql.append("        primerApellido = ?,");
+        sql.append("        segundoApellido = ?,");
+        sql.append("        ciudadResidencia = ?,");
+        sql.append("        correoElectronico = ?,");
+        sql.append("        numeroTelefonoMovil = ?,");
+        sql.append("        correoElectronicoConfirmado = ?,");
+        sql.append("        numeroTelefonoMovilConfirmado = ?");
+        sql.append("WHERE   id = ?");
+
+
+        try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
+
+            preparedStatement.setObject(1, entity.getIdType().getId());
+            preparedStatement.setString(2, entity.getIdNumber());
+            preparedStatement.setString(3, entity.getFirstName());
+            preparedStatement.setString(4, entity.getSecondName());
+            preparedStatement.setString(5, entity.getFirstSurname());
+            preparedStatement.setString(6, entity.getSecondSurname());
+            preparedStatement.setObject(7, entity.getCity().getId());
+            preparedStatement.setString(8, entity.geteMail());
+            preparedStatement.setString(9, entity.getMobileNumber());
+            preparedStatement.setBoolean(10, entity.iseMailConfirmed());
+            preparedStatement.setBoolean(11, entity.isMobileNumberConfirmed());
+            preparedStatement.setObject(12, entity.getId());
+
+            preparedStatement.executeUpdate();
+
+
+        } catch (final SQLException exception) {
+            var userMessage = MessagesEnum.USER_ERROR_SQL_UPDATE.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UPDATE.getContent();
+            throw NoseException.create(exception, userMessage, technicalMessage);
+        } catch (final Exception exception){
+            var userMessage = MessagesEnum.USER_ERROR_UNEXPECTED_UPDATE.getContent();
+            var technicalMessage = MessagesEnum.USER_ERROR_UNEXPECTED_UPDATE.getContent();
+            throw NoseException.create(exception,userMessage,technicalMessage);
+        }
+    }
+
+    @Override
+    public void delete(final UUID id) {
+
+        SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
+        final var sql= new StringBuilder();
+        sql.append("DELETE FROM User ");
+        sql.append("WHERE id=?");
+        try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
+
+            preparedStatement.setObject(1, id);
+            preparedStatement.executeUpdate();
+
+        } catch (final SQLException exception) {
+            var userMessage = MessagesEnum.USER_ERROR_SQL_DELETE.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_DELETE.getContent();
+            throw NoseException.create(exception, userMessage, technicalMessage);
+        } catch (final Exception exception) {
+            var userMessage = MessagesEnum.USER_ERROR_UNEXPECTED_DELETE.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_UNEXPECTED_DELETE.getContent();
+            throw NoseException.create(exception, userMessage, technicalMessage);
+        }
+    }
 
     @Override
     public List<UserEntity> findByFilter(final UserEntity filterEntity) {
@@ -246,86 +323,6 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
             var technicalMessage = MessagesEnum.TECHNICAL_ERROR_FIND_BY_ID_UNEXPECTED.getContent();
             throw NoseException.create(exception, userMessage, technicalMessage);
         }
-
         return listUser;
-    }
-
-    @Override
-    public UserEntity findById(final UUID id) {
-        return findByFilter(new UserEntity(id)).stream().findFirst().orElse((new UserEntity()));
-    }
-
-    @Override
-    public void update(final UserEntity entity) {
-
-        SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
-
-        final var sql = new StringBuilder();
-        sql.append("UPDATE  User ");
-        sql.append("SET     tipoIdentificacion = ?,");
-        sql.append("        numeroIdentificacion = ?,");
-        sql.append("        primerNombre = ?,");
-        sql.append("        segundoNombre = ?,");
-        sql.append("        primerApellido = ?,");
-        sql.append("        segundoApellido = ?,");
-        sql.append("        ciudadResidencia = ?,");
-        sql.append("        correoElectronico = ?,");
-        sql.append("        numeroTelefonoMovil = ?,");
-        sql.append("        correoElectronicoConfirmado = ?,");
-        sql.append("        numeroTelefonoMovilConfirmado = ?");
-        sql.append("WHERE   id = ?");
-
-
-        try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
-
-            preparedStatement.setObject(1, entity.getIdType().getId());
-            preparedStatement.setString(2, entity.getIdNumber());
-            preparedStatement.setString(3, entity.getFirstName());
-            preparedStatement.setString(4, entity.getSecondName());
-            preparedStatement.setString(5, entity.getFirstSurname());
-            preparedStatement.setString(6, entity.getSecondSurname());
-            preparedStatement.setObject(7, entity.getCity().getId());
-            preparedStatement.setString(8, entity.geteMail());
-            preparedStatement.setString(9, entity.getMobileNumber());
-            preparedStatement.setBoolean(10, entity.iseMailConfirmed());
-            preparedStatement.setBoolean(11, entity.isMobileNumberConfirmed());
-            preparedStatement.setObject(12, entity.getId());
-
-            preparedStatement.executeUpdate();
-
-
-        } catch (final SQLException exception) {
-            var userMessage = MessagesEnum.USER_ERROR_SQL_UPDATE.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UPDATE.getContent();
-            throw NoseException.create(exception, userMessage, technicalMessage);
-        } catch (final Exception exception){
-            var userMessage = MessagesEnum.USER_ERROR_UNEXPECTED_UPDATE.getContent();
-            var technicalMessage = MessagesEnum.USER_ERROR_UNEXPECTED_UPDATE.getContent();
-            throw NoseException.create(exception,userMessage,technicalMessage);
-        }
-    }
-
-    @Override
-    public void delete(final UUID id) {
-
-        SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
-
-        final var sql= new StringBuilder();
-        sql.append("DELETE FROM User ");
-        sql.append("WHERE id=?");
-        try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
-
-            preparedStatement.setObject(1, id);
-            preparedStatement.executeUpdate();
-
-        } catch (final SQLException exception) {
-            var userMessage = MessagesEnum.USER_ERROR_SQL_DELETE.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_DELETE.getContent();
-            throw NoseException.create(exception, userMessage, technicalMessage);
-        } catch (final Exception exception) {
-            var userMessage = MessagesEnum.USER_ERROR_UNEXPECTED_DELETE.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_UNEXPECTED_DELETE.getContent();
-            throw NoseException.create(exception, userMessage, technicalMessage);
-        }
     }
 }
