@@ -6,6 +6,8 @@ import co.edu.uco.nose.crosscuting.helper.ObjectHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 import co.edu.uco.nose.dto.CountryDTO;
 
+import java.util.List;
+
 public final class CountryDTOAssembler implements DTOassembler<CountryDTO, CountryDomain> {
 
     // Instancia única (patrón Singleton)
@@ -29,5 +31,10 @@ public final class CountryDTOAssembler implements DTOassembler<CountryDTO, Count
     public CountryDomain toDomain(final CountryDTO dto) {
         var dtoTmp = ObjectHelper.getDefault(dto, new CountryDTO());
         return new CountryDomain(dtoTmp.getId(), dtoTmp.getName());
+    }
+
+    @Override
+    public List<CountryDTO> toDTO(List<CountryDomain> domainList) {
+        return List.of();
     }
 }

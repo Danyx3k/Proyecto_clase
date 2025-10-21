@@ -2,7 +2,7 @@ package co.edu.uco.nose.Business.business.impl;
 
 import co.edu.uco.nose.Business.Domain.UserDomain;
 import co.edu.uco.nose.Business.business.UserBusiness;
-import co.edu.uco.nose.Business.entityAssembler.UserEntityAssembler;
+import co.edu.uco.nose.Business.assembler.entity.impl.UserEntityAssembler;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 import co.edu.uco.nose.data.dao.factory.DAOFactory;
 import co.edu.uco.nose.entity.UserEntity;

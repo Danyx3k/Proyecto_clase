@@ -6,6 +6,8 @@ import co.edu.uco.nose.crosscuting.helper.ObjectHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 import co.edu.uco.nose.dto.StateDTO;
 
+import java.util.List;
+
 public final class StateDTOAssembler implements DTOassembler<StateDTO,StateDomain> {
 
     // ✅ Instancia única (Singleton)
@@ -33,6 +35,11 @@ public final class StateDTOAssembler implements DTOassembler<StateDTO,StateDomai
         var countryDomainTmp = CountryDTOAssembler.getCountryDTOAssembler()
                 .toDomain(dtoTmp.getCountry());
         return new StateDomain(dtoTmp.getId(), countryDomainTmp, dtoTmp.getName());
+    }
+
+    @Override
+    public List<StateDTO> toDTO(List<StateDomain> domainList) {
+        return List.of();
     }
 
 }

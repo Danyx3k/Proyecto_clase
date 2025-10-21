@@ -1,4 +1,4 @@
-package co.edu.uco.nose.Business.entity;
+package co.edu.uco.nose.Business.assembler.entity;
 
 import java.util.List;
 
