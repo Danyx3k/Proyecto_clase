@@ -1,7 +1,9 @@
 package co.edu.uco.nose.data.dao.Entity.sqlserver;
 
 import co.edu.uco.nose.crosscuting.helper.MessageCatalog.MessagesEnum;
+import co.edu.uco.nose.crosscuting.helper.ObjectHelper;
 import co.edu.uco.nose.crosscuting.helper.SqlConnectionHelper;
+import co.edu.uco.nose.crosscuting.helper.TextHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 import co.edu.uco.nose.crosscuting.helper.exception.NoseException;
 import co.edu.uco.nose.data.dao.Entity.SqlConnection;
@@ -10,7 +12,9 @@ import co.edu.uco.nose.entity.*;
 
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,12 +28,14 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
     @Override
     public void create(final UserEntity entity) {
 
+        SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
+
         final var sql = new StringBuilder();
         sql.append("INSERT INTO User(id, tipoIdentificacion, numeroIdentificacion, primerNombre, segundoNombre," +
                 "primerApellido, segundoApellido, ciudadResidencia, correoElectronico, numeroTelefonoMovil," +
                 "correoElectronicoConfirmado, numeroTelefonoMovilConfirmado)");
         sql.append("SELECT ?,?,?,?,?,?,?,?,?,?,?,?");
-        try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())){
+        try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
 
             preparedStatement.setObject(1, entity.getId());
             preparedStatement.setObject(2, entity.getIdType().getId());
@@ -50,7 +56,7 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
             var userMessage = MessagesEnum.USER_ERROR_SQL_CREATE.getContent();
             var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CREATE.getContent();
             throw NoseException.create(exception, userMessage, technicalMessage);
-        }catch(final Exception exception) {
+        } catch (final Exception exception) {
             var userMessage = MessagesEnum.USER_ERROR_UNEXPECTED_CREATE.getContent();
             var technicalMessage = MessagesEnum.TECHNICAL_ERROR_UNEXPECTED_CREATE.getContent();
             throw NoseException.create(exception, userMessage, technicalMessage);
@@ -59,21 +65,39 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
 
     @Override
     public List<UserEntity> findAll() {
-        return List.of();
+        return findByFilter(new UserEntity());
     }
 
     @Override
-    public List<UserEntity> findByFilter(UserEntity filterEntity) {
-        return List.of();
+    public List<UserEntity> findByFilter(final UserEntity filterEntity) {
+
+        var papametersList = new ArrayList<Object>();
+        var sql = createSentenceFindByFilter(filterEntity, papametersList);
+
+        try (var preparedStatement = this.getConnection().prepareStatement(sql)) {
+
+            for (int index = 0; index < papametersList.size(); index++) {
+                preparedStatement.setObject(index + 1, papametersList.get(index));
+            }
+            return executeSentenceFindByFilter(preparedStatement);
+
+        } catch (final NoseException exception) {
+            throw exception;
+        } catch (final SQLException exception) {
+            var userMessage = MessagesEnum.USER_ERROR_FIND_BY_FILTER_SQL.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_FIND_BY_FILTER_SQL.getContent();
+            throw NoseException.create(exception,userMessage, technicalMessage);
+        } catch (final Exception exception) {
+            var userMessage = MessagesEnum.USER_ERROR_FIND_BY_FILTER_UNEXPECTED.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_FIND_BY_FILTER_UNEXPECTED.getContent();
+            throw NoseException.create(exception, userMessage, technicalMessage);
+        }
     }
 
-    @Override
-    public UserEntity findById(final UUID id) {
 
-        SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
-        var user = new UserEntity();
-
+    private String createSentenceFindByFilter(final UserEntity filterEntity, final List<Object> parametersList){
         final var sql = new StringBuilder();
+
         sql.append("SELECT      u.id,");
         sql.append("            ti.id AS idTipoIdentificacion,");
         sql.append("            ti.nombre AS nombreTipoIdentificacion,");
@@ -103,50 +127,115 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
         sql.append("ON          d.pais = p.id ");
         sql.append("WHERE       u.ud = ?");
 
+        createWhereClauseFindByFilter(sql,parametersList, filterEntity);
 
-        try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
+        return sql.toString();
 
-            preparedStatement.setObject(1, id);
+    }
+
+    private void createWhereClauseFindByFilter(final StringBuilder sql, final List<Object> parametersList, final UserEntity filterEntity) {
+        var filterEntityValidated = ObjectHelper.getDefault(filterEntity, new UserEntity());
+        final var conditions = new ArrayList<String>();
+
+        addCondition(conditions, parametersList,
+                !UUIDHelper.getUUIDHelper().isDefaultUUID(filterEntityValidated.getId()),
+                "u.id = ?", filterEntityValidated.getId());
+
+        addCondition(conditions, parametersList,
+                !UUIDHelper.getUUIDHelper().isDefaultUUID(filterEntityValidated.getIdType().getId()),
+                "u.tipoIdentificacion = ?", filterEntityValidated.getIdType().getId());
+
+        addCondition(conditions, parametersList,
+                !TextHelper.isEmptyWithTrim(filterEntityValidated.getIdNumber()),
+                "u.numeroIdentificacion = ?", filterEntityValidated.getIdNumber());
+
+        addCondition(conditions, parametersList,
+                !TextHelper.isEmptyWithTrim(filterEntityValidated.getFirstName()),
+                "u.primerNombre = ?", filterEntityValidated.getFirstName());
+
+        addCondition(conditions, parametersList,
+                !TextHelper.isEmptyWithTrim(filterEntityValidated.getSecondName()),
+                "u.segundoNombre = ?", filterEntityValidated.getSecondName());
+
+        addCondition(conditions, parametersList, !TextHelper.isEmptyWithTrim(filterEntityValidated.getFirstSurname()),
+                "u.primerApellido = ?", filterEntityValidated.getFirstSurname());
+
+        addCondition(conditions, parametersList, !TextHelper.isEmptyWithTrim(filterEntityValidated.getSecondSurname()),
+                "u.segundoApellido = ?", filterEntityValidated.getSecondSurname());
+
+        addCondition(conditions, parametersList, !UUIDHelper.getUUIDHelper().isDefaultUUID(filterEntityValidated.getCity().getId()),
+                "u.ciudadResidencia = ?", filterEntityValidated.getCity().getId());
 
 
-            try (var resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    // Tipo de Identificación
-                    var idType = new IdTypeEntity();
-                    idType.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idTipoIdentificacion")));
-                    idType.setName(resultSet.getString("nombreTipoIdentificacion"));
+        addCondition(conditions, parametersList,
+                !TextHelper.isEmptyWithTrim(filterEntityValidated.geteMail()),
+                "u.correoElectronico = ?", filterEntityValidated.geteMail());
 
+        addCondition(conditions, parametersList,
+                !TextHelper.isEmptyWithTrim(filterEntityValidated.getMobileNumber()),
+                "u.numeroTelefonoMovil = ?", filterEntityValidated.getMobileNumber());
 
-                    // Ciudad --> Departamento --> País
-                    var country = new CountryEntity();
-                    country.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idPaisDepartamentoCiudadResidencia")));
-                    country.setName(resultSet.getString("nombrePaisDepartamentoCiudadResidencia"));
+        addCondition(conditions, parametersList,
+                !filterEntityValidated.iseMailConfirmedDefaultValue(),
+                "u.correoElectronicoConfirmado = ?", filterEntityValidated.iseMailConfirmedDefaultValue());
 
-                    var state = new StateEntity();
-                    state.setCountry(country);
-                    state.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idDepartamentoCiudadResidencia")));
-                    state.setName(resultSet.getString("nombreDepartamentoCiudadResidencia"));
+        addCondition(conditions, parametersList,
+                !filterEntityValidated.isMobileNumberConfirmedDefaultValue(),
+                "u.correoElectronicoConfirmado = ?", filterEntityValidated.isMobileNumberConfirmedDefaultValue());
 
-                    var city = new CityEntity();
-                    city.setState(state);
-                    city.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idCiudadResidencia")));
-                    city.setName(resultSet.getString("nombreCiudadResidencia"));
+        if (!conditions.isEmpty()){
+            sql.append("WHERE");
+            sql.append((String.join(" AND ", conditions)));
+        }
 
+    }
 
-                    user.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("id")));
-                    user.setIdType(idType);
-                    user.setFirstName(resultSet.getString("primerNombre"));
-                    user.setSecondName(resultSet.getString("segundoNombre"));
-                    user.setFirstSurname(resultSet.getString("primerApellido"));
-                    user.setSecondSurname(resultSet.getString("segundoApellido"));
-                    user.setCity(city);
-                    user.seteMail(resultSet.getString("correoElectronico"));
-                    user.setMobileNumber(resultSet.getString("numeroTelefonoMovil"));
-                    user.seteMailConfirmed(resultSet.getBoolean("correoElectronicoConfirmado"));
-                    user.setMobileNumberConfirmed(resultSet.getBoolean("numeroTelefonoMovilConfirmado"));
+    private void addCondition(final List<String> conditions, final List<Object> parametersList,
+                              final boolean condition, final String clause, final Object value) {
+        if (condition) {
+            conditions.add(clause);
+            parametersList.add(value);
+        }
+    }
 
-                }
+    private List<UserEntity> executeSentenceFindByFilter(final PreparedStatement preparedStatement){
 
+        var listUser = new ArrayList<UserEntity>();
+
+        try (var resultSet = preparedStatement.executeQuery()){
+            while(resultSet.next()){
+                var idType = new IdTypeEntity();
+                idType.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idTipoIdentificacion")));
+                idType.setName(resultSet.getString("nombreTipoIdentificacion"));
+
+                var country = new CountryEntity();
+                country.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idPaisDepartamentoCiudadResidencia")));
+                country.setName(resultSet.getString("nombrePaisDepartamentoCiudadResidencia"));
+
+                var state = new StateEntity();
+                state.setCountry(country);
+                state.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idDepartamentoCiudadResidencia")));
+                state.setName(resultSet.getString("nombreDepartamentoCiudadResidencia"));
+
+                var city = new CityEntity();
+                city.setState(state);
+                city.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idCiudadResidencia")));
+                city.setName(resultSet.getString("nombreCiudadResidencia"));
+
+                var user = new UserEntity();
+                user.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("id")));
+                user.setIdType(idType);
+                user.setFirstName(resultSet.getString("primerNombre"));
+                user.setSecondName(resultSet.getString("segundoNombre"));
+                user.setFirstSurname(resultSet.getString("primerApellido"));
+                user.setSecondSurname(resultSet.getString("segundoApellido"));
+                user.setCity(city);
+                user.seteMail(resultSet.getString("correoElectronico"));
+                user.setMobileNumber(resultSet.getString("numeroTelefonoMovil"));
+                user.seteMailConfirmed(resultSet.getBoolean("correoElectronicoConfirmado"));
+                user.setMobileNumberConfirmed(resultSet.getBoolean("numeroTelefonoMovilConfirmado"));
+
+                listUser.add(user);
             }
         } catch (final SQLException exception) {
             var userMessage = MessagesEnum.USER_ERROR_FIND_BY_ID_SQL.getContent();
@@ -158,7 +247,12 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
             throw NoseException.create(exception, userMessage, technicalMessage);
         }
 
-        return user;
+        return listUser;
+    }
+
+    @Override
+    public UserEntity findById(final UUID id) {
+        return findByFilter(new UserEntity(id)).stream().findFirst().orElse((new UserEntity()));
     }
 
     @Override
