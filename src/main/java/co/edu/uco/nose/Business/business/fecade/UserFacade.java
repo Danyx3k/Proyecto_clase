@@ -7,11 +7,11 @@ import java.util.UUID;
 
 public interface UserFacade {
 
-    void resgitresNewUserInformation(UserDTO userDomain);
+    void resgitresNewUserInformation(UserDTO userDTO);
 
     void dropUserInformation(UUID id);
 
-    void updateUserInformation(UUID id, UserDTO userDTO);
+    void updateUserInformation(UUID id, UserDTO userDto);
 
     List<UserDTO> findAllUsers();
 

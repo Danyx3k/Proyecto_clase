@@ -18,20 +18,14 @@ public final class UUIDHelper {
     }
 
     public UUID getFromString(final String uuidAsString) {
-        if (uuidAsString == null || uuidAsString.isBlank()) {
-            return getDefault();
-        }
-        return UUID.fromString(uuidAsString);
+        return TextHelper.isEmptyWithTrim(uuidAsString) ? getDefault() : UUID.fromString(uuidAsString);
     }
 
     public boolean isDefaultUUID(final UUID value) {
-        if (value == null) {
-            return true;
-        }
-        return value.equals(getDefault());
+        return getDefault().equals(getDefault(value));
     }
 
-    public UUID genetareNweUUID(){
+    public UUID genetareNewUUID(){
         return UUID.randomUUID();
     }
 }

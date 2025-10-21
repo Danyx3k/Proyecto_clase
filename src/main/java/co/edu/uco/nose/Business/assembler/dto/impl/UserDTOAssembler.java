@@ -1,7 +1,5 @@
 package co.edu.uco.nose.Business.assembler.dto.impl;
 
-package co.edu.uco.nose.Buisness.assembler.dto.impl;
-
 import static co.edu.uco.nose.Business.assembler.dto.impl.CityDTOAssembler.getCityDTOAssembler;
 import static co.edu.uco.nose.Business.assembler.dto.impl.IdTypeDTOAssembler.getIdTypeDTOAssembler;
 
@@ -29,9 +27,8 @@ public final class UserDTOAssembler implements DTOassembler<UserDTO, UserDomain>
 
     @Override
     public UserDTO toDTO(final UserDomain domain) {
-        var domainTmp = ObjectHelper.getDefault(domain, new UserDomain(UUIDHelper.getUUIDHelper().getDefault()));
 
-        // Conversión de subdominios
+        var domainTmp = ObjectHelper.getDefault(domain, new UserDomain(UUIDHelper.getUUIDHelper().getDefault()));
         var idTypeDtoTmp = getIdTypeDTOAssembler().toDTO(domainTmp.getIdType());
         var cityDtoTmp = getCityDTOAssembler().toDTO(domainTmp.getCity());
 
@@ -47,7 +44,10 @@ public final class UserDTOAssembler implements DTOassembler<UserDTO, UserDomain>
                 domainTmp.geteMail(),
                 domainTmp.getMobileNumber(),
                 domainTmp.iseMailConfirmed(),
-                domainTmp.isMobileNumberConfirmed()
+                domainTmp.iseMailConfirmedDefaultValue(),
+                domainTmp.isMobileNumberConfirmed(),
+                domainTmp.isMobileNumberConfirmedDefaultValue()
+
         );
     }
 
@@ -71,7 +71,9 @@ public final class UserDTOAssembler implements DTOassembler<UserDTO, UserDomain>
                 dtoTmp.geteMail(),
                 dtoTmp.getMobileNumber(),
                 dtoTmp.iseMailConfirmed(),
-                dtoTmp.isMobileNumberConfirmed()
+                dtoTmp.iseMailConfirmedDefaultValue(),
+                dtoTmp.isMobileNumberConfirmed(),
+                dtoTmp.isMobileNumberConfirmedDefaultValue()
         );
     }
 

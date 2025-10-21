@@ -1,11 +1,10 @@
 package co.edu.uco.nose.Business.assembler.entity.impl;
 
-import co.edu.uco.nose.Business.Domain.CountryDomain;
+
 import co.edu.uco.nose.Business.Domain.StateDomain;
 import co.edu.uco.nose.Business.assembler.entity.EntityAssambler;
 import co.edu.uco.nose.crosscuting.helper.ObjectHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
-import co.edu.uco.nose.entity.CountryEntity;
 import co.edu.uco.nose.entity.StateEntity;
 
 import java.util.List;

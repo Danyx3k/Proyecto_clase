@@ -86,6 +86,7 @@ public final class UserEntity {
         setMobileNumberConfirmedDefaultValue(mobileNumberConfirmedDefaultValue);
     }
 
+
     public UUID getId() {
         return id;
     }
