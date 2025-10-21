@@ -6,6 +6,8 @@ import co.edu.uco.nose.crosscuting.helper.ObjectHelper;
 import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 import co.edu.uco.nose.dto.IdTypeDTO;
 
+import java.util.List;
+
 public final class IdTypeDTOAssembler implements DTOassembler<IdTypeDTO, IdTypeDomain> {
 
     // ✅ Instancia única (Singleton)
@@ -22,12 +24,17 @@ public final class IdTypeDTOAssembler implements DTOassembler<IdTypeDTO, IdTypeD
     @Override
     public IdTypeDTO toDTO(final IdTypeDomain domain) {
         var domainTmp = ObjectHelper.getDefault(domain, new IdTypeDomain(UUIDHelper.getUUIDHelper().getDefault()));
-        return new IdTypeDTO(domainTmp.getId(), domainTmp.getName(), domainTmp.getDescription());
+        return new IdTypeDTO(domainTmp.getId(), domainTmp.getName());
     }
 
     @Override
     public IdTypeDomain toDomain(final IdTypeDTO dto) {
         var dtoTmp = ObjectHelper.getDefault(dto, new IdTypeDTO());
-        return new IdTypeDomain(dtoTmp.getId(), dtoTmp.getName(), dtoTmp.getDescription());
+        return new IdTypeDomain(dtoTmp.getId(), dtoTmp.getName());
+    }
+
+    @Override
+    public List<IdTypeDTO> toDTO(List<IdTypeDomain> domainList) {
+        return List.of();
     }
 }

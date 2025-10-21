@@ -26,7 +26,7 @@ public final class StateDTOAssembler implements DTOassembler<StateDTO,StateDomai
         var domainTmp = ObjectHelper.getDefault(domain, new StateDomain(UUIDHelper.getUUIDHelper().getDefault()));
         var countryDtoTmp = CountryDTOAssembler.getCountryDTOAssembler()
                 .toDTO(domainTmp.getCountry());
-        return new StateDTO(domainTmp.getId(), countryDtoTmp, domainTmp.getName());
+        return new StateDTO(domainTmp.getId(),  domainTmp.getName(), countryDtoTmp);
     }
 
     @Override
@@ -34,7 +34,7 @@ public final class StateDTOAssembler implements DTOassembler<StateDTO,StateDomai
         var dtoTmp = ObjectHelper.getDefault(dto, new StateDTO());
         var countryDomainTmp = CountryDTOAssembler.getCountryDTOAssembler()
                 .toDomain(dtoTmp.getCountry());
-        return new StateDomain(dtoTmp.getId(), countryDomainTmp, dtoTmp.getName());
+        return new StateDomain(dtoTmp.getId(),dtoTmp.getName(),countryDomainTmp);
     }
 
     @Override
