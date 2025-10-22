@@ -49,8 +49,8 @@ private void setConnection(final Connection connection) {
         try {
             return !getConnection().getAutoCommit();
         } catch (SQLException ex) {
-            var userMessage = MessagesEnum.USER_ERROR_SQL_TRANSACTION_STATUS_UNKNOWN.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_TRANSACTION_STATUS_UNKNOWN.getContent();
+            var userMessage = MessagesEnum.USER_ERROR_TRANSACTION_IS_NOT_STARTED.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_TRANSACTION_IS_NOT_STARTED.getContent();
             throw NoseException.create(ex, userMessage, technicalMessage);
         }
     }
@@ -60,8 +60,8 @@ private void setConnection(final Connection connection) {
      */
     protected final void assertTransactionActiveOrThrow() {
         if (!isTransactionActive()) {
-            var userMessage = MessagesEnum.USER_ERROR_SQL_TRANSACTION_NOT_STARTED.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_TRANSACTION_NOT_STARTED.getContent();
+            var userMessage = MessagesEnum.USER_ERROR_TRANSACTION_IS_NOT_STARTED.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_TRANSACTION_IS_NOT_STARTED.getContent();
             throw NoseException.create(userMessage, technicalMessage);
         }
     }

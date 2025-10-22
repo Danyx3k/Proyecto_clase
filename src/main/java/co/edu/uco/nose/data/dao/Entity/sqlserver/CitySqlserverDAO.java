@@ -40,4 +40,9 @@ public final class CitySqlserverDAO extends SqlConnection implements CityDAO {
     public void update(CityEntity entity) {
 
     }
+
+    @Override
+    public void create(CityEntity entity) {
+
+    }
 }
