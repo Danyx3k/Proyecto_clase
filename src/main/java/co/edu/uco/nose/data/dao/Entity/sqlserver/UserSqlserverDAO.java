@@ -78,6 +78,7 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
+
         sql.append("UPDATE  proyecto_clase.usuario ");
         sql.append("SET     tipoIdentificacion = ?,");
         sql.append("        numeroIdentificacion = ?,");
@@ -127,8 +128,10 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
 
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
         final var sql= new StringBuilder();
+
         sql.append("DELETE FROM proyecto_clase.usuario ");
         sql.append("WHERE id=?");
+
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
 
             preparedStatement.setObject(1, id);
@@ -148,13 +151,13 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
     @Override
     public List<UserEntity> findByFilter(final UserEntity filterEntity) {
 
-        var papametersList = new ArrayList<Object>();
-        var sql = createSentenceFindByFilter(filterEntity, papametersList);
+        var parametersList = new ArrayList<Object>();
+        var sql = createSentenceFindByFilter(filterEntity, parametersList);
 
         try (var preparedStatement = this.getConnection().prepareStatement(sql)) {
 
-            for (int index = 0; index < papametersList.size(); index++) {
-                preparedStatement.setObject(index + 1, papametersList.get(index));
+            for (int index = 0; index < parametersList.size(); index++) {
+                preparedStatement.setObject(index + 1, parametersList.get(index));
             }
             return executeSentenceFindByFilter(preparedStatement);
 
@@ -293,7 +296,7 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
 
                 var city = new CityEntity();
                 city.setState(state);
-                city.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idCiudadResidencia")));
+                city.setId(UUIDHelper.getUUIDHelper().getFromString("idCiudadResidencia"));
                 city.setName(resultSet.getString("nombreCiudadResidencia"));
 
                 var user = new UserEntity();
