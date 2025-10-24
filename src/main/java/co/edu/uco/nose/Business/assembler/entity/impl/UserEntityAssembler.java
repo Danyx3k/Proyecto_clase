@@ -7,7 +7,6 @@ import co.edu.uco.nose.crosscuting.helper.UUIDHelper;
 import co.edu.uco.nose.entity.UserEntity;
 
 import java.util.List;
-import java.util.UUID;
 
 import static co.edu.uco.nose.Business.assembler.entity.impl.CityEntityAssembler.getCityEntityAssembler;
 import static co.edu.uco.nose.Business.assembler.entity.impl.IdTypeEntityAssembler.getIdTypeEntityAssembler;

@@ -14,7 +14,7 @@ public class testUserRegistration {
         try {
             var user = new UserDTO();
             var idType = new IdTypeDTO();
-            idType.setId(UUID.fromString("11111111-1111-1111-1111-111111111111"));
+            idType.setId(UUID.fromString("463d0b30-4884-4761-9208-e65641c5401e"));
             idType.setName("Cédula de ciudadanía");
             user.setIdType(idType);
 
@@ -27,7 +27,7 @@ public class testUserRegistration {
 
             // 🔹 Ciudad
             var city = new CityDTO();
-            city.setId(UUID.fromString("22222222-2222-2222-2222-222222222222"));
+            city.setId(UUID.fromString("2ebd56ce-55e4-4c2a-a438-fbf43121efd8"));
             city.setName("Rionegro");
             user.setCity(city);
 
