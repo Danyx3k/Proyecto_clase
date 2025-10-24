@@ -571,7 +571,20 @@ public enum MessagesEnum {
             "Error inesperado al intentar filtrar un país."),
 
     TECHNICAL_UNEXPECTED_ERROR_FIND_BY_FILTER_STATE("Se ha presentado un error inesperado al intentar filtrar un país. Por favor verifique la traza completa del error.",
-            "Error inesperado al intentar filtrar un país con los datos suministrados.");
+            "Error inesperado al intentar filtrar un país con los datos suministrados."),
+
+    USER_ERROR_SQL_DELETE_CITY( "Se ha presentado un error al intentar eliminar la ciudad en la base de datos. Por favor verifique la información ingresada exista y que esté completa, si el error persiste comuníquese con el administrador.",
+            "Error al intentar eliminar la ciudad desde la base de datos." ),
+
+    TECHNICAL_ERROR_SQL_DELETE_CITY("Se ha presentado un error al intentar eliminar la ciudad en la base de datos con la sentencia configurada. Por favor verifique la traza completa del error.",
+            "Error técnico al intentar eliminar la ciudad en la base de datos verifique la trama."),
+
+    USER_UNEXPECTED_ERROR_DELETE_CITY("No se pudo eliminar la ciudad con el comando seleccionado.",
+            "Error inesperado al intentar eliminar la ciudad."),
+
+    TECHNICAL_UNEXPECTED_ERROR_DELETE_CITY("Se ha presentado un error inesperado al intentar eliminar la ciudad. Por favor verifique la traza completa del error.",
+            "Error inesperado al intentar eliminar la ciudad con los datos suministrados.");
+
 
 
 
