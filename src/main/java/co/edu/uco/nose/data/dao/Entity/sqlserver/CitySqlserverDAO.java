@@ -17,7 +17,7 @@ public final class CitySqlserverDAO extends SqlConnection implements CityDAO {
 
 
     @Override
-    public void delete(UUID uuid) {
+    public void delete(UUID id) {
 
     }
 
@@ -38,11 +38,5 @@ public final class CitySqlserverDAO extends SqlConnection implements CityDAO {
 
     @Override
     public void update(CityEntity entity) {
-
-    }
-
-    @Override
-    public void create(CityEntity entity) {
-
     }
 }

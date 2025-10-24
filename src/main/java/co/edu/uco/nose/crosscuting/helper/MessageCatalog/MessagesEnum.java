@@ -417,9 +417,101 @@ public enum MessagesEnum {
     TECHNICAL_ERROR_FIND_BY_FILTER_CRITICAL_STATE("Se ha presentado un error crítico al intentar consultar los estados filtrados en la base de datos. Por favor verifique la traza completa del error.",
             "Error técnico crítico al intentar consultar los estados según el filtro."),
 
+    USER_ERROR_SQL_CREATE_COUNTRY( "Se ha presentado un error inesperado al intentar crear el país en la base de datos. Por favor verifique la información ingresada no exista y que esté completa, si el error persiste comuníquese con el administrador.",
+            "Error al intentar crear un país en la base de datos." ),
 
+    TECHNICAL_ERROR_SQL_CREATE_COUNTRY("Se ha presentado un error al intentar crear el país en la base de datos. Por favor verifique la traza completa del error.",
+                                                            "Error técnico al intentar crear el país en la base de datos verifique la trama."),
 
-    ;
+    USER_UNEXPECTED_ERROR_CREATE_COUNTRY("No se pudo crear el país con el comando seleccionado.",
+                                                "Error inesperado al intentar crear un país."),
+
+    TECHNICAL_UNEXPECTED_ERROR_CREATE_COUNTRY("Se ha presentado un error inesperado al intentar crear un país. Por favor verifique la traza completa del error.",
+                                                          "Error inesperado al intentar crear un país con los datos suministrados."),
+
+    USER_ERROR_EXECUTE_SENTENCE_CREATE_COUNTRY( "Se ha presentado un error inesperado al intentar crear los datos ingresados del país en la base de datos. Por favor verifique la información ingresada no exista y esté completa, si el error persiste comuníquese con el administrador.",
+                                           "Error al intentar insertar los datos ingresados de un país en la base de datos." ),
+
+    TECHNICAL_ERROR_EXECUTE_SENTENCE_CREATE_COUNTRY("Se ha presentado un error al intentar ejecutar el comando de inserción de datos del país en la base de datos. Por favor verifique la traza completa del error.",
+                                               "Error técnico al intentar ejecutar el comando de inserción del país en la base de datos verifique la trama."),
+
+    USER_UNEXPECTED_ERROR_EXECUTE_SENTENCE_CREATE_COUNTRY("No se pudo ejecutar la creación el país con el comando seleccionado.",
+                                                 "Error inesperado al intentar ejecutar la creación de un país."),
+
+    TECHNICAL_UNEXPECTED_ERROR_EXECUTE_SENTENCE_CREATE_COUNTRY("Se ha presentado un error inesperado al intentar ejecutar el comando de inserción de un país. Por favor verifique la traza completa del error.",
+                                                      "Error inesperado al intentar ejecutar el comando de inserción del país con los datos suministrados."),
+
+    USER_ERROR_SQL_FIND_BY_FILTER_COUNTRY( "Se ha presentado un error inesperado al intentar filtrar el país en la base de datos. Por favor verifique la información ingresada no exista y que esté completa, si el error persiste comuníquese con el administrador.",
+                                           "Error al intentar filtrar un país desde la base de datos." ),
+
+    TECHNICAL_ERROR_SQL_FIND_BY_FILTER_COUNTRY("Se ha presentado un error al intentar filtrar el país en la base de datos en la sentencia. Por favor verifique la traza completa del error.",
+                                               "Error técnico al intentar filtrar el país en la base de datos verifique la trama."),
+
+    USER_UNEXPECTED_ERROR_FIND_BY_FILTER_COUNTRY("No se pudo filtrar el país con el comando seleccionado.",
+                                                 "Error inesperado al intentar filtrar un país."),
+
+    TECHNICAL_UNEXPECTED_ERROR_FIND_BY_FILTER_COUNTRY("Se ha presentado un error inesperado al intentar filtrar un país. Por favor verifique la traza completa del error.",
+                                                      "Error inesperado al intentar filtrar un país con los datos suministrados."),
+
+    USER_ERROR_SQL_DELETE_COUNTRY( "Se ha presentado un error inesperado al intentar eliminar el país en la base de datos. Por favor verifique la información ingresada exista y que esté completa, si el error persiste comuníquese con el administrador.",
+                                                   "Error al intentar eliminar un país desde la base de datos." ),
+
+    TECHNICAL_ERROR_SQL_DELETE_COUNTRY("Se ha presentado un error al intentar eliminar el país en la base de datos con la sentencia configurada. Por favor verifique la traza completa del error.",
+                                                       "Error técnico al intentar eliminar el país en la base de datos verifique la trama."),
+
+    USER_UNEXPECTED_ERROR_DELETE_COUNTRY("No se pudo eliminar el país con el comando seleccionado.",
+                                                         "Error inesperado al intentar eliminar un país."),
+
+    TECHNICAL_UNEXPECTED_ERROR_DELETE_COUNTRY("Se ha presentado un error inesperado al intentar eliminar un país. Por favor verifique la traza completa del error.",
+                                                              "Error inesperado al intentar eliminar un país con los datos suministrados."),
+
+    USER_ERROR_SQL_UPDATE_COUNTRY( "Se ha presentado un error inesperado al intentar actualizar el país en la base de datos. Por favor verifique la información ingresada cumpla con los requisitos, si el error persiste comuníquese con el administrador.",
+                                           "Error al intentar actualizar un país desde la base de datos." ),
+
+    TECHNICAL_ERROR_SQL_UPDATE_COUNTRY("Se ha presentado un error al intentar actualizar el país en la base de datos con la sentencia configurada. Por favor verifique la traza completa del error.",
+                                               "Error técnico al intentar actualizar el país en la base de datos verifique la trama."),
+
+    USER_UNEXPECTED_ERROR_UPDATE_COUNTRY("No se pudo actualizar el país con el comando seleccionado.",
+                                                 "Error inesperado al intentar actualizar un país."),
+
+    TECHNICAL_UNEXPECTED_ERROR_UPDATE_COUNTRY("Se ha presentado un error inesperado al intentar actualizar un país. Por favor verifique la traza completa del error.",
+                                                      "Error inesperado al intentar actualizar un país con los datos suministrados."),
+
+    USER_ERROR_SQL_UPDATE_IDTYPE( "Se ha presentado un error inesperado al intentar actualizar el tipo de identificación en la base de datos. Por favor verifique la información ingresada cumpla con los requisitos, si el error persiste comuníquese con el administrador.",
+                                           "Error al intentar actualizar tipo de identificación desde la base de datos." ),
+
+    TECHNICAL_ERROR_SQL_UPDATE_IDTYPE("Se ha presentado un error al intentar actualizar el tipo de identificación en la base de datos con la sentencia configurada. Por favor verifique la traza completa del error.",
+                                               "Error técnico al intentar actualizar el tipo de identificación en la base de datos verifique la trama."),
+
+    USER_UNEXPECTED_ERROR_UPDATE_IDTYPE("No se pudo actualizar el tipo de identificación con el comando seleccionado.",
+                                                 "Error inesperado al intentar actualizar el tipo de identificación."),
+
+    TECHNICAL_UNEXPECTED_ERROR_UPDATE_IDTYPE("Se ha presentado un error inesperado al intentar actualizar el tipo de identificación. Por favor verifique la traza completa del error.",
+                                                      "Error inesperado al intentar actualizar el tipo de identificación con los datos suministrados."),
+
+    USER_ERROR_SQL_DELETE_IDTYPE( "Se ha presentado un error inesperado al intentar eliminar el tipo de identificación en la base de datos. Por favor verifique la información ingresada exista y que esté completa, si el error persiste comuníquese con el administrador.",
+            "Error al intentar eliminar el tipo de identificación desde la base de datos." ),
+
+    TECHNICAL_ERROR_SQL_DELETE_IDTYPE("Se ha presentado un error al intentar eliminar el tipo de identificación en la base de datos con la sentencia configurada. Por favor verifique la traza completa del error.",
+            "Error técnico al intentar eliminar el tipo de identificación en la base de datos verifique la trama."),
+
+    USER_UNEXPECTED_ERROR_DELETE_IDTYPE("No se pudo eliminar el tipo de identificación con el comando seleccionado.",
+            "Error inesperado al intentar eliminar el tipo de identificación."),
+
+    TECHNICAL_UNEXPECTED_ERROR_DELETE_IDTYPE("Se ha presentado un error inesperado al intentar eliminar el tipo de identificación. Por favor verifique la traza completa del error.",
+            "Error inesperado al intentar eliminar el tipo de identificación con los datos suministrados."),
+
+    USER_ERROR_EXECUTE_SENTENCE_CREATE_IDTYPE( "Se ha presentado un error inesperado al intentar crear los datos ingresados del tipo de identificación en la base de datos. Por favor verifique la información ingresada no exista y esté completa, si el error persiste comuníquese con el administrador.",
+                                                        "Error al intentar insertar los datos ingresados del tipo de identificación en la base de datos." ),
+
+    TECHNICAL_ERROR_EXECUTE_SENTENCE_CREATE_IDTYPE("Se ha presentado un error al intentar ejecutar el comando de inserción de datos del tipo de identificación en la base de datos. Por favor verifique la traza completa del error.",
+                                                            "Error técnico al intentar ejecutar el comando de inserción del tipo de identificación en la base de datos verifique la trama."),
+
+    USER_UNEXPECTED_ERROR_EXECUTE_SENTENCE_CREATE_IDTYPE("No se pudo ejecutar la creación del tipo de identificación con el comando seleccionado.",
+                                                                  "Error inesperado al intentar ejecutar la creación de un país."),
+
+    TECHNICAL_UNEXPECTED_ERROR_EXECUTE_SENTENCE_CREATE_IDTYPE("Se ha presentado un error inesperado al intentar ejecutar el comando de inserción del tipo de identificación. Por favor verifique la traza completa del error.",
+                                                                       "Error inesperado al intentar ejecutar el comando de inserción del tipo de identificación con los datos suministrados.");
 
 
 

@@ -9,5 +9,5 @@ import co.edu.uco.nose.entity.IdTypeEntity;
 import java.util.UUID;
 
 public interface IdTypeDAO
-        extends CreateDAO<IdTypeEntity>, RetriveDAO<IdTypeEntity, UUID>, UpdateDAO<IdTypeEntity>, DeleteDAO<UUID> {
+        extends RetriveDAO<IdTypeEntity, UUID>, UpdateDAO<IdTypeEntity>, DeleteDAO<UUID> {
 }
