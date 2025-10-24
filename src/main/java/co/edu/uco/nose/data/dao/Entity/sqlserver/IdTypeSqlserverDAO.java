@@ -24,7 +24,6 @@ public final class IdTypeSqlserverDAO extends SqlConnection implements IdTypeDAO
         super(connection);
     }
 
-
     @Override
     public void delete(UUID id) {
 

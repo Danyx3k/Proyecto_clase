@@ -511,7 +511,68 @@ public enum MessagesEnum {
                                                                   "Error inesperado al intentar ejecutar la creación de un país."),
 
     TECHNICAL_UNEXPECTED_ERROR_EXECUTE_SENTENCE_CREATE_IDTYPE("Se ha presentado un error inesperado al intentar ejecutar el comando de inserción del tipo de identificación. Por favor verifique la traza completa del error.",
-                                                                       "Error inesperado al intentar ejecutar el comando de inserción del tipo de identificación con los datos suministrados.");
+                                                                       "Error inesperado al intentar ejecutar el comando de inserción del tipo de identificación con los datos suministrados."),
+
+    USER_ERROR_SQL_DELETE_STATE( "Se ha presentado un error inesperado al intentar eliminar el estado en la base de datos. Por favor verifique la información ingresada exista y que esté completa, si el error persiste comuníquese con el administrador.",
+            "Error al intentar eliminar el estado desde la base de datos." ),
+
+    TECHNICAL_ERROR_SQL_DELETE_STATE("Se ha presentado un error al intentar eliminar el estado en la base de datos con la sentencia configurada. Por favor verifique la traza completa del error.",
+            "Error técnico al intentar eliminar el estado en la base de datos verifique la trama."),
+
+    USER_UNEXPECTED_ERROR_DELETE_STATE("No se pudo eliminar el estado con el comando seleccionado.",
+            "Error inesperado al intentar eliminar el estado."),
+
+    TECHNICAL_UNEXPECTED_ERROR_DELETE_STATE("Se ha presentado un error inesperado al intentar eliminar el estado. Por favor verifique la traza completa del error.",
+            "Error inesperado al intentar eliminar el estado con los datos suministrados."),
+
+    USER_ERROR_SQL_UPDATE_STATE( "Se ha presentado un error inesperado al intentar actualizar el estado en la base de datos. Por favor verifique la información ingresada cumpla con los requisitos, si el error persiste comuníquese con el administrador.",
+                                          "Error al intentar actualizar el estado desde la base de datos." ),
+
+    TECHNICAL_ERROR_SQL_UPDATE_STATE("Se ha presentado un error al intentar actualizar el estado en la base de datos con la sentencia configurada. Por favor verifique la traza completa del error.",
+                                              "Error técnico al intentar actualizar el estado en la base de datos verifique la trama."),
+
+    USER_UNEXPECTED_ERROR_UPDATE_STATE("No se pudo actualizar el estado con el comando seleccionado.",
+                                                "Error inesperado al intentar actualizar el estado."),
+
+    TECHNICAL_UNEXPECTED_ERROR_UPDATE_STATE("Se ha presentado un error inesperado al intentar actualizar el estado. Por favor verifique la traza completa del error.",
+                                                     "Error inesperado al intentar actualizar el estado con los datos suministrados."),
+
+    USER_ERROR_SQL_CREATE_STATE( "Se ha presentado un error inesperado al intentar crear el país en la base de datos. Por favor verifique la información ingresada no exista y que esté completa, si el error persiste comuníquese con el administrador.",
+            "Error al intentar crear un país en la base de datos." ),
+
+    TECHNICAL_ERROR_SQL_CREATE_STATE("Se ha presentado un error al intentar crear el país en la base de datos. Por favor verifique la traza completa del error.",
+            "Error técnico al intentar crear el país en la base de datos verifique la trama."),
+
+    USER_UNEXPECTED_ERROR_CREATE_STATE("No se pudo crear el país con el comando seleccionado.",
+            "Error inesperado al intentar crear un país."),
+
+    TECHNICAL_UNEXPECTED_ERROR_CREATE_STATE("Se ha presentado un error inesperado al intentar crear un país. Por favor verifique la traza completa del error.",
+            "Error inesperado al intentar crear un país con los datos suministrados."),
+
+    USER_ERROR_EXECUTE_SENTENCE_CREATE_STATE( "Se ha presentado un error al intentar crear los datos ingresados del estado en la base de datos. Por favor verifique la información ingresada no exista y esté completa, si el error persiste comuníquese con el administrador.",
+            "Error al intentar insertar los datos ingresados del tipo de identificación en la base de datos." ),
+
+    TECHNICAL_ERROR_EXECUTE_SENTENCE_CREATE_STATE("Se ha presentado un error al intentar ejecutar el comando de inserción de datos del estado en la base de datos. Por favor verifique la traza completa del error.",
+            "Error técnico al intentar ejecutar el comando de inserción del estado en la base de datos verifique la trama."),
+
+    USER_UNEXPECTED_ERROR_EXECUTE_SENTENCE_CREATE_STATE("No se pudo ejecutar la creación del estado con el comando seleccionado.",
+            "Error inesperado al intentar ejecutar la creación del estado"),
+
+    TECHNICAL_UNEXPECTED_ERROR_EXECUTE_SENTENCE_CREATE_STATE("Se ha presentado un error inesperado al intentar ejecutar el comando de inserción del estado. Por favor verifique la traza completa del error.",
+            "Error inesperado al intentar ejecutar el comando de inserción del estado con los datos suministrados."),
+
+    USER_ERROR_SQL_FIND_BY_FILTER_STATE( "Se ha presentado un error inesperado al intentar filtrar el país en la base de datos. Por favor verifique la información ingresada no exista y que esté completa, si el error persiste comuníquese con el administrador.",
+            "Error al intentar filtrar un país desde la base de datos." ),
+
+    TECHNICAL_ERROR_SQL_FIND_BY_FILTER_STATE("Se ha presentado un error al intentar filtrar el país en la base de datos en la sentencia. Por favor verifique la traza completa del error.",
+            "Error técnico al intentar filtrar el país en la base de datos verifique la trama."),
+
+    USER_UNEXPECTED_ERROR_FIND_BY_FILTER_STATE("No se pudo filtrar el país con el comando seleccionado.",
+            "Error inesperado al intentar filtrar un país."),
+
+    TECHNICAL_UNEXPECTED_ERROR_FIND_BY_FILTER_STATE("Se ha presentado un error inesperado al intentar filtrar un país. Por favor verifique la traza completa del error.",
+            "Error inesperado al intentar filtrar un país con los datos suministrados.");
+
 
 
 
