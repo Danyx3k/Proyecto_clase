@@ -583,7 +583,32 @@ public enum MessagesEnum {
             "Error inesperado al intentar eliminar la ciudad."),
 
     TECHNICAL_UNEXPECTED_ERROR_DELETE_CITY("Se ha presentado un error inesperado al intentar eliminar la ciudad. Por favor verifique la traza completa del error.",
-            "Error inesperado al intentar eliminar la ciudad con los datos suministrados.");
+            "Error inesperado al intentar eliminar la ciudad con los datos suministrados."),
+
+    USER_ERROR_SQL_UPDATE_CITY( "Se ha presentado un error inesperado al intentar actualizar la ciudad en la base de datos. Por favor verifique la información ingresada cumpla con los requisitos, si el error persiste comuníquese con el administrador.",
+            "Error al intentar actualizar la ciudad desde la base de datos." ),
+
+    TECHNICAL_ERROR_SQL_UPDATE_CITY("Se ha presentado un error al intentar actualizar la ciudad en la base de datos con la sentencia configurada. Por favor verifique la traza completa del error.",
+            "Error técnico al intentar actualizar la ciudad en la base de datos verifique la trama."),
+
+    USER_UNEXPECTED_ERROR_UPDATE_CITY("No se pudo actualizar la ciudad con el comando seleccionado.",
+            "Error inesperado al intentar actualizar la ciudad."),
+
+    TECHNICAL_UNEXPECTED_ERROR_UPDATE_CITY("Se ha presentado un error inesperado al intentar actualizar la ciudad. Por favor verifique la traza completa del error.",
+            "Error inesperado al intentar actualizar la ciudad con los datos suministrados."),
+
+    USER_ERROR_EXECUTE_SENTENCE_CREATE_CITY( "Se ha presentado un error al intentar crear los datos ingresados de la ciudad en la base de datos. Por favor verifique la información ingresada no exista y esté completa, si el error persiste comuníquese con el administrador.",
+            "Error al intentar insertar los datos ingresados de la ciudad en la base de datos." ),
+
+    TECHNICAL_ERROR_EXECUTE_SENTENCE_CREATE_CITY("Se ha presentado un error al intentar ejecutar el comando de inserción de datos de la ciudad en la base de datos. Por favor verifique la traza completa del error.",
+            "Error técnico al intentar ejecutar el comando de inserción de la ciudad en la base de datos verifique la trama."),
+
+    USER_UNEXPECTED_ERROR_EXECUTE_SENTENCE_CREATE_CITY("No se pudo ejecutar la creación de la ciudad con el comando seleccionado.",
+            "Error inesperado al intentar ejecutar la creación de la ciudad"),
+
+    TECHNICAL_UNEXPECTED_ERROR_EXECUTE_SENTENCE_CREATE_CITY("Se ha presentado un error inesperado al intentar ejecutar el comando de inserción dde la ciudad. Por favor verifique la traza completa del error.",
+            "Error inesperado al intentar ejecutar el comando de inserción de la ciudad con los datos suministrados.");
+
 
 
 
