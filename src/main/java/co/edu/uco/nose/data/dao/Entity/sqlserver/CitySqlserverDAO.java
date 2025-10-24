@@ -9,7 +9,6 @@ import co.edu.uco.nose.crosscuting.helper.exception.NoseException;
 import co.edu.uco.nose.data.dao.Entity.CityDAO;
 import co.edu.uco.nose.data.dao.Entity.SqlConnection;
 import co.edu.uco.nose.entity.CityEntity;
-import co.edu.uco.nose.entity.CountryEntity;
 import co.edu.uco.nose.entity.StateEntity;
 
 import java.sql.Connection;
@@ -154,7 +153,7 @@ public final class CitySqlserverDAO extends SqlConnection implements CityDAO {
         }
     }
 
-    private List<StateEntity> executeSentenceFindByFilter(final PreparedStatement preparedStatement){
+    private List<CityEntity> executeSentenceFindByFilter(final PreparedStatement preparedStatement){
 
         var listCity = new ArrayList<CityEntity>();
 

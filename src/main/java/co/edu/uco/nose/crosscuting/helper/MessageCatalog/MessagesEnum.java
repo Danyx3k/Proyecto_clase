@@ -610,11 +610,6 @@ public enum MessagesEnum {
             "Error inesperado al intentar ejecutar el comando de inserción de la ciudad con los datos suministrados.");
 
 
-
-
-
-
-
     private String title;
     private String content;
 
