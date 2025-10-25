@@ -34,7 +34,7 @@ public final class UserSqlserverDAO extends SqlConnection implements UserDAO {
         sql.append("INSERT INTO proyecto_clase.usuario(id, tipoIdentificacion, numeroIdentificacion, primerNombre, segundoNombre," +
                 "primerApellido, segundoApellido, ciudadResidencia, correoElectronico, numeroTelefonoMovil," +
                 "correoElectronicoConfirmado, numeroTelefonoMovilConfirmado)");
-        sql.append(") VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+        sql.append(" VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
 
             preparedStatement.setObject(1, entity.getId());
