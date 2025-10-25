@@ -12,6 +12,7 @@ import java.util.UUID;
 
 public final class UserFacadeImpl implements UserFacade {
 
+
     @Override
     public void resgitresNewUserInformation(final UserDTO userDto) {
         var daoFactory = DAOFactory.getFactory();
